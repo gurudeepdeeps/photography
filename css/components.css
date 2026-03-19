@@ -1,0 +1,327 @@
+/* components.css - UI Components for Sagar Doddamani */
+
+/* Header & Navigation */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 0.8rem 3rem; /* Reduced height */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 10, 0.3);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+header.scrolled {
+    padding: 0.5rem 3rem; /* Even more compact when scrolled */
+    background: rgba(10, 10, 10, 0.6);
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--color-on-surface);
+    text-transform: uppercase;
+}
+
+nav ul {
+    display: flex;
+    gap: 3rem;
+}
+
+@media (max-width: 1024px) {
+    header { padding: 1rem 1.5rem; }
+    header.scrolled { padding: 0.7rem 1.5rem; }
+    nav { display: none; }
+    .mobile-menu-btn { display: block !important; }
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-on-surface);
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.mobile-nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--color-bg);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-medium);
+}
+
+.mobile-nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-nav-overlay a {
+    font-size: 1.5rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-family: var(--font-headline);
+}
+
+.close-menu-btn {
+    position: absolute;
+    top: 2rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--color-on-surface);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+nav a {
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-on-surface);
+    opacity: 0.7;
+}
+
+nav a:hover, nav a.active {
+    opacity: 1;
+    color: var(--color-primary);
+}
+
+/* Buttons */
+.btn {
+    padding: 0.8rem 2rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition-medium);
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    background: transparent;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    background: transparent;
+}
+
+.btn-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    transform: translateY(-2px);
+}
+
+/* Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 3rem;
+    transition: var(--transition-medium);
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-primary);
+}
+
+/* Image Containers */
+.image-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), filter 0.8s ease;
+}
+
+.work-item:hover .image-container img {
+    transform: scale(1.08) rotate(1deg);
+    filter: brightness(0.7) saturate(1.2);
+}
+
+.cinematic-overlay-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(212, 175, 55, 0.1);
+    opacity: 0;
+    transition: all 0.6s ease;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.work-item:hover .cinematic-overlay-play {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.cinematic-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(14,14,14,0.1) 0%, rgba(14,14,14,0.8) 100%);
+    pointer-events: none;
+}
+
+/* Forms */
+/* Collection Cards */
+.collection-card {
+    background: rgba(10, 10, 10, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 5rem 3rem;
+    text-align: center;
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.collection-card:hover {
+    transform: translateY(-20px);
+    background: rgba(20, 20, 20, 0.6);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9), 
+                0 0 40px -10px rgba(212, 175, 55, 0.1);
+}
+
+.collection-card.featured {
+    border-color: rgba(212, 175, 55, 0.15);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.featured-badge {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-primary);
+    color: black;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 700;
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+    transition: all 0.5s ease;
+}
+
+.collection-card:hover .featured-badge {
+    transform: translate(-50%, -80%);
+    box-shadow: 0 20px 40px rgba(212, 175, 55, 0.4);
+}
+
+.collection-card h4 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+.collection-card .label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 1rem;
+}
+
+.collection-card .description {
+    font-size: 0.9rem;
+    opacity: 0.5;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+}
+
+.collection-card .features {
+    padding: 0;
+    margin: 0 0 4rem 0;
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.collection-card .features li {
+    margin-bottom: 1rem;
+}
+
+.collection-card .btn-text {
+    font-family: var(--font-headline);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--color-on-surface);
+    margin-top: auto;
+    opacity: 0.8;
+}
+
+.collection-card .btn-text:hover {
+    color: var(--color-primary);
+    opacity: 1;
+}
+
+/* Bento Grid Staggered */
+.bento-staggered {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 4rem;
+}
+
+.bento-staggered > div:nth-child(2) {
+    margin-top: 8rem;
+}
+
+.bento-staggered > div:nth-child(4) {
+    margin-top: -8rem;
+}
+
+@media (max-width: 768px) {
+    .bento-staggered {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+    .bento-staggered > div:nth-child(n) {
+        margin-top: 0 !important;
+    }
+}
+
+.hero-actions {
+    margin-top: 4.5rem;
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
