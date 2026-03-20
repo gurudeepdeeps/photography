@@ -205,6 +205,7 @@
                 display: none;
             }
         }
+
         /* Submission Form Section */
         .submission-section {
             padding: 8rem 2rem;
@@ -231,7 +232,8 @@
             margin-bottom: 0.75rem;
         }
 
-        .noir-input, .noir-textarea {
+        .noir-input,
+        .noir-textarea {
             width: 100%;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -242,7 +244,8 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .noir-input:focus, .noir-textarea:focus {
+        .noir-input:focus,
+        .noir-textarea:focus {
             background: rgba(255, 255, 255, 0.05);
             border-color: var(--color-primary);
             outline: none;
@@ -508,44 +511,44 @@
     </div>
 
     <!-- Testimonial Submission Section -->
-        <section id="testimonialSubmission" class="submission-section fade-in">
-            <div class="text-center mb-16 max-w-2xl px-4">
-                <h2 class="brand-headline text-4xl mb-6 italic">Share Your Perspective</h2>
-                <p class="text-[10px] uppercase tracking-[0.2em] opacity-60 leading-relaxed">
-                    Your legacy is our heartbeat. If we've had the honor of documenting your narrative, we invite you to
-                    share your story with our future couples.
-                </p>
+    <section id="testimonialSubmission" class="submission-section fade-in">
+        <div class="text-center mb-16 max-w-2xl px-4">
+            <h2 class="brand-headline text-4xl mb-6 italic">Share Your Perspective</h2>
+            <p class="text-[10px] uppercase tracking-[0.2em] opacity-60 leading-relaxed">
+                Your legacy is our heartbeat. If we've had the honor of documenting your narrative, we invite you to
+                share your story with our future couples.
+            </p>
+        </div>
+
+        <form id="testimonialForm" class="w-full flex flex-col items-center px-4 min-h-[300px] justify-center">
+            <!-- Form Inputs Content -->
+            <div id="formContent" class="w-full flex flex-col items-center transition-all duration-700">
+                <div class="noir-field">
+                    <label class="noir-label">Your Names</label>
+                    <input type="text" id="userName" placeholder="e.g., Olivia & Thomas" class="noir-input" required>
+                </div>
+
+                <div class="noir-field">
+                    <label class="noir-label">Your Story / Feedback</label>
+                    <textarea id="userStory" rows="5" placeholder="Share your experience working with us..."
+                        class="noir-textarea" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    Submit Perspective
+                </button>
             </div>
 
-            <form id="testimonialForm" class="w-full flex flex-col items-center px-4 min-h-[300px] justify-center">
-                <!-- Form Inputs Content -->
-                <div id="formContent" class="w-full flex flex-col items-center transition-all duration-700">
-                    <div class="noir-field">
-                        <label class="noir-label">Your Names</label>
-                        <input type="text" id="userName" placeholder="e.g., Olivia & Thomas" class="noir-input" required>
-                    </div>
-
-                    <div class="noir-field">
-                        <label class="noir-label">Your Story / Feedback</label>
-                        <textarea id="userStory" rows="5" placeholder="Share your experience working with us..."
-                            class="noir-textarea" required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-submit">
-                        Submit Perspective
-                    </button>
-                </div>
-
-                <!-- Success Message Overly/In-place -->
-                <div id="successMessage" style="display: none;" class="w-full text-center py-12">
-                    <div class="material-icons text-primary text-5xl mb-6">workspace_premium</div>
-                    <p class="text-primary text-[10px] uppercase tracking-[0.4em] leading-[2.5] text-center">
-                        Your narrative has been received. <br>
-                        Thank you for being part of our story.
-                    </p>
-                </div>
-            </form>
-        </section>
+            <!-- Success Message Overly/In-place -->
+            <div id="successMessage" style="display: none;" class="w-full text-center py-12">
+                <div class="material-icons text-primary text-5xl mb-6">workspace_premium</div>
+                <p class="text-primary text-[10px] uppercase tracking-[0.4em] leading-[2.5] text-center">
+                    Your Feedback has been received. <br>
+                    Thank you for being part of our story.
+                </p>
+            </div>
+        </form>
+    </section>
 
     <footer class="py-24 px-12 bg-surface-lowest border-t border-outline">
         <div class="max-w-7xl mx-auto">
@@ -682,7 +685,7 @@
                         // Clean entrance animation (relative scaling/fade)
                         success.style.opacity = '0';
                         success.style.transform = 'translateY(10px) scale(0.98)';
-                        
+
                         requestAnimationFrame(() => {
                             success.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
                             success.style.opacity = '1';
