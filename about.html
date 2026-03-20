@@ -1,39 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | Sagar Doddamani</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,300&family=Inter:wght@200;300;400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,300&family=Inter:wght@200;300;400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/animations.css">
     <style>
-        .about-hero {
-            height: 100vh;
-            position: relative;
+        .split-hero {
+            min-height: 100vh;
+        }
+
+        .hero-text {
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+        }
+
+        .manifesto-section {
+            padding: 0 5% 8rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .manifesto-quote {
+            font-size: clamp(2rem, 5vw, 4rem);
+            line-height: 1.2;
+            font-weight: 300;
+            color: var(--color-text-primary);
+            margin-bottom: 4rem;
+        }
+
+        .staggered-bio {
+            padding-bottom: 12rem;
+        }
+
+        .bio-item {
             display: flex;
-            align-items: flex-end;
-            padding-bottom: 8rem;
+            align-items: center;
+            gap: 8rem;
+            margin-bottom: 12rem;
+        }
+
+        .bio-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .bio-image {
+            width: 50%;
+            aspect-ratio: 4/5;
             overflow: hidden;
+            border: 1px solid var(--color-outline);
+            background: var(--color-surface-low);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
         }
-        .about-hero img {
-            filter: grayscale(1) brightness(0.4);
-            transition: var(--transition-slow);
+
+        .bio-content {
+            width: 50%;
+            max-width: 500px;
         }
-        .about-hero:hover img {
-            filter: grayscale(0.5) brightness(0.5);
-        }
-        .about-title {
-            font-size: clamp(5rem, 15vw, 12rem);
-            line-height: 0.8;
-            margin-left: -2rem;
+
+        @media (max-width: 768px) {
+            .split-hero {
+                min-height: auto;
+            }
+
+            .bio-item,
+            .bio-item:nth-child(even) {
+                flex-direction: column;
+                gap: 4rem;
+                margin-bottom: 8rem;
+            }
+
+            .bio-image,
+            .bio-content {
+                width: 100%;
+                max-width: none;
+            }
+
+            .manifesto-section {
+                padding: 6rem 5%;
+            }
         }
     </style>
 </head>
+
 <body>
     <header id="main-header">
         <div class="logo brand-headline"><a href="index.html">SAGAR DODDAMANI</a></div>
@@ -66,42 +126,80 @@
         <a href="testimonials.html">Testimonials</a>
         <a href="contact.html">Contact</a>
     </div>
-
-    <main>
-        <section class="about-hero px-12">
-            <div class="image-container absolute inset-0 z-0">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOAjlm4kyO8Qtrr0nL0HdzOSyT_SLMYadBp6c4eQBCEPWr4A93QDpvMGZsrv6g7WyawC8kec2dHS0ePlmyMJgrR4GmjFCOozyc8BII6NQ7FSx6ftMt1c2G0dJo7lrHTdTEYpHLkl6Bnf0ipEgHJundGutchfCc1xVcgCJMDn8cBBCS6ZCC7OboQwukik0MzlEJHC9eKSXHFDEc8KB7pNO5-qNL36gcGrrszgSYYCuU1zNOxt01EjJP4L-X9kFznyWCTOVscY_jg_GO" alt="Sagar Doddamani" class="w-full h-full object-cover">
-                <div class="cinematic-overlay"></div>
-            </div>
-            <div class="relative z-10">
-                <span class="tracking-vogue uppercase text-xs text-primary mb-6 block stagger-in">The Visionary Behind the Lens</span>
-                <h1 class="about-title font-serif tracking-tight stagger-in delay-1">
-                    Sagar<br><span class="italic font-light opacity-80" style="margin-left: 8rem;">Doddamani</span>
-                </h1>
-            </div>
-        </section>
-
-        <section class="py-48 px-12 max-w-7xl">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
-                <div class="md:col-span-12">
-                     <p class="text-4xl md:text-5xl leading-tight opacity-80 italic mb-24 fade-in">
-                        "I don't just capture weddings. I curate the quiet, unscripted fragments of a soul's history."
-                    </p>
+    <main class="pt-32">
+        <div class="px-12 max-w-7xl mx-auto">
+            <!-- Narrative 01: Filmmaker -->
+            <div class="bio-item fade-in">
+                <div class="bio-image box-shadow-premium">
+                    <img src="assets/sagar_portrait.png" alt="Sagar Doddamani Portrait"
+                        class="w-full h-full object-cover">
                 </div>
-                <div class="md:col-span-7 space-y-12 fade-in">
-                    <p class="text-lg font-light leading-loose opacity-60">
-                        My journey began with a simple realization: the most profound stories aren't found in the grand gestures, but in the micro-moments. The trembling of a hand, the fleeting glance before a vow, the exhale of relief after the first dance.
-                    </p>
-                    <p class="text-lg font-light leading-loose opacity-60">
-                        For over a decade, I have dedicated my life to the art of cinematic preservation. Based on a philosophy of "Essentialism," I strip away the noise of traditional wedding photography to find the raw, editorial heartbeat of your celebration.
-                    </p>
-                </div>
-                <div class="md:col-span-5 relative fade-in">
-                    <div class="image-container aspect-[4/5] opacity-60">
-                         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEYa5WKJOgt9jw_AUHPLpfR5F6SfsaJYsIne384_2KeY5ORm418Wrq6izGfAYMy9ZrvpkNNDnFnGCBajLWls4lUPjoMMzulEg55VNr28TK1W5x1lt2G5XjEo7F-IKGN72_PYY0xk5qcj-42f3jcX_MtDE7ZMxsGvGyQJQDd6R5DQChfMKKXH_m5g_cS92Qq_MqdH-iUA1BvOfWeERgnAnaeaN41pYgF-FBw4_ycrkv9RleSOFpC3Ddq0crauveklvD2APEtjL1M8vX" alt="Philosophy">
+                <div class="bio-content text-center">
+                    <span class="text-primary text-[10px] uppercase tracking-[0.5em] mb-8 block font-medium">The Filmmaker</span>
+                    <h2 class="brand-headline text-6xl lg:text-7xl mb-12 leading-[0.9] text-center w-full">
+                        Sagar <br>
+                        <span class="text-primary italic font-light opacity-90 text-5xl lg:text-6xl block">Doddamani</span>
+                    </h2>
+                    <div class="philosophy-text space-y-10 text-sm lg:text-base opacity-60 leading-relaxed font-light max-w-lg mx-auto text-center">
+                        <p>
+                            Every film is hand-crafted in our studio, ensuring that the final narrative is an honest
+                            reflection of your connection. We work with a limited number of couples each year to maintain
+                            this level of artisanal focus.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-6 mt-12">
+                        <div class="stat-btn">
+                            <span class="stat-number">10+</span>
+                            <span class="stat-label">Years</span>
+                        </div>
+                        <div class="stat-btn">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Manifesto Section -->
+        <section class="manifesto-section">
+            <div class="max-w-4xl mx-auto">
+                <p class="manifesto-quote font-serif italic fade-in">
+                    "Art is not what I see. <br> It is what I make others <span class="text-primary">feel.</span>"
+                </p>
+            </div>
+        </section>
+
+        <!-- Pillar Section (Consistency with Cards) -->
+        <section class="py-32 px-12 bg-surface-lowest">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-5xl text-center mb-24 font-normal fade-in">Foundational Values</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="collection-card fade-in">
+                        <h4>Artistry</h4>
+                        <p class="description">We lean into the timeless, using light and shadow to create a visual
+                            legacy that transcends current trends.</p>
+                    </div>
+                    <div class="collection-card featured fade-in delay-1">
+                        <div class="featured-badge">Core Intent</div>
+                        <h4>Creativity</h4>
+                        <p class="description">Capturing raw emotions without staging. We believe the most beautiful
+                            moments are the ones you didn't know happened.</p>
+                    </div>
+                    <div class="collection-card fade-in delay-2">
+                        <h4>Impact</h4>
+                        <p class="description">Creating a portal back to the soul of your celebration, ensuring your
+                            story is felt by generations to come.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divider & Final CTA -->
+        <div class="section-divider-gold fade-in"></div>
+        <section class="py-32 px-12 text-center">
+            <h2 class="text-4xl md:text-6xl mb-12 font-serif italic fade-in">Tell your story with us.</h2>
+            <a href="contact.html" class="btn btn-primary px-16 py-6 fade-in">Start the Narrative</a>
         </section>
     </main>
 
@@ -161,20 +259,16 @@
                         Links</h5>
                     <div class="w-10 h-px bg-primary mb-6"></div>
                     <ul class="space-y-6">
-                        <li><a href="index.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Home</a>
+                        <li><a href="index.html" class="text-sm uppercase tracking-widest transition-colors">Home</a>
                         </li>
-                        <li><a href="films.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Films</a>
+                        <li><a href="films.html" class="text-sm uppercase tracking-widest transition-colors">Films</a>
                         </li>
-                        <li><a href="album.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Albums</a>
+                        <li><a href="album.html" class="text-sm uppercase tracking-widest transition-colors">Albums</a>
                         </li>
                         <li><a href="packages.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Packages</a>
                         </li>
-                        <li><a href="about.html"
-                                class="text-sm uppercase tracking-widest transition-colors">About</a>
+                        <li><a href="about.html" class="text-sm uppercase tracking-widest transition-colors">About</a>
                         </li>
                         <li><a href="testimonials.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Testimonials</a>
@@ -193,4 +287,5 @@
 
     <script src="js/animations.js"></script>
 </body>
+
 </html>
