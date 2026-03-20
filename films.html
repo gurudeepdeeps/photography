@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Films | Sagar Doddamani</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,300&family=Inter:wght@200;300;400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,300&family=Inter:wght@200;300;400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/animations.css">
     <style>
         .films-header {
-            padding-top: 12rem;
-            padding-bottom: 6rem;
+            padding-top: 6rem;
+            padding-bottom: 3rem;
         }
+
         .films-header h1 {
-            font-size: clamp(4rem, 12vw, 10rem);
-            line-height: 0.8;
-            margin-bottom: 4rem;
+            font-size: clamp(3rem, 7vw, 6rem);
+            line-height: 0.9;
+            margin-bottom: 2.5rem;
         }
+
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
             gap: 4rem;
         }
+
         .reveal-overlay-content {
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -36,10 +43,22 @@
             opacity: 0;
             transition: opacity 0.8s ease;
         }
+
         .image-container:hover .reveal-overlay-content {
             opacity: 1;
         }
+
         @media (max-width: 768px) {
+            .films-header {
+                padding-top: 8rem;
+                padding-bottom: 2rem;
+            }
+
+            .films-header h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
+
             .gallery-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
@@ -47,6 +66,7 @@
         }
     </style>
 </head>
+
 <body>
     <header id="main-header">
         <div class="logo brand-headline"><a href="index.html">SAGAR DODDAMANI</a></div>
@@ -62,7 +82,7 @@
         <div class="flex items-center gap-6">
             <a href="contact.html" class="btn btn-outline hidden-mobile">Contact</a>
             <button class="mobile-menu-btn" id="menu-open">
-                <span class="material-icons">menu</span>
+                <span class="material-symbols-outlined">menu</span>
             </button>
         </div>
     </header>
@@ -82,52 +102,152 @@
 
     <main>
         <div class="films-header px-12 max-w-7xl">
-            <h1 class="stagger-in">The Silent <br> <span class="italic text-primary">Narrative</span></h1>
+            <h1 class="stagger-in">The Creative <br> <span class="italic text-primary">Films</span></h1>
             <div class="flex flex-col md:flex-row justify-between items-end gap-12 stagger-in delay-2">
                 <p class="max-w-xl text-lg font-light opacity-70">
-                    Every frame is an heirloom. A curated collection of wedding films that prioritize emotional resonance over traditional documentation.
+                    Every frame is an heirloom. A curated collection of wedding films that prioritize emotional
+                    resonance over traditional documentation.
                 </p>
-                <div class="tracking-vogue uppercase text-[10px] opacity-40">Scroll to Explore</div>
             </div>
         </div>
 
-        <section class="px-12 py-24 max-w-7xl">
-            <div class="gallery-grid">
-                <!-- Large Featured -->
-                <div style="grid-column: span 12;" class="fade-in">
-                    <div class="image-container aspect-[16/9]">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAG9zRwBc7MrDVgElJjaMSVOVRSGWEYyL94dv1Vgrc83W1K2K5VruSrT8wPCOnnk0qRh4A8azkOSYCekckK_y4wc35-d_qXAVpln6Lu4u-7bRCF_gcAIrSgV2MbhTFb-3x3RCrWWNZBs_5cVlpli6jmhIW9_aXnf7BhRVLdGMtoX5GE0WlB4EH11fwrBYojkzKLa5WD_835jz-gSHf6lhWY7RIkRxiqb5d1zjFejp9H8Ky1ZJXtvjAhrXXttn_9RhJpLF9kBvanS-eO" alt="Aria & Julian">
-                        <div class="reveal-overlay-content">
-                            <p class="text-primary text-[10px] tracking-vogue uppercase mb-4">Featured Film</p>
-                            <h2 class="text-5xl mb-4 italic">Aria & Julian</h2>
-                            <div class="uppercase tracking-widest text-[10px] opacity-60">Lake Como, Italy • MMXXIV</div>
-                        </div>
+        <section class="px-12 py-24 max-w-7xl mx-auto">
+            <div class="video-grid grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24" id="video-grid">
+                <!-- Video 1 -->
+                <div class="video-item fade-in">
+                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
+                        <video src="https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" 
+                               controls class="w-full h-full object-cover"></video>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-2xl italic font-serif">Aria & Julian</h3>
+                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Lake Como, Italy • MMXXIV</p>
                     </div>
                 </div>
 
-                <!-- Column 1 -->
-                <div style="grid-column: span 7;" class="fade-in">
-                    <div class="image-container aspect-[4/5]">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCadDFmWv5kx5QY13bV2ILbAs9C9zfZuyHikyxuzmYvv4KDI0-Elb7DjipfxmBQoCIbyIr5rZgeC8etF-38j2Ks_dMtKrl9KPQzj6zfHZ2gItOlIRGBAz1qEeydin6Jzhx16aYtY1DGPr6-g0zgha0__mWsYJqvl9FanzuKVwcbmgK0V_qyR2f4ysEikLZ4FMW3HR52LjMeFJnluTaaut7LEckEcZZ0-ozRP52uYTfYvl0Yilk03goupfKF6Oe5_z9vLbuFvd2dDRON" alt="The Minimalist">
-                        <div class="reveal-overlay-content">
-                            <h2 class="text-3xl mb-2 italic">The Minimalist</h2>
-                            <div class="uppercase tracking-widest text-[10px] opacity-60">Paris • 2023</div>
-                        </div>
+                <!-- Video 2 -->
+                <div class="video-item fade-in">
+                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
+                        <video src="https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" 
+                               controls class="w-full h-full object-cover"></video>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-2xl italic font-serif">The Minimalist</h3>
+                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Paris, France • MMXXIII</p>
                     </div>
                 </div>
 
-                <!-- Column 2 -->
-                <div style="grid-column: span 5; margin-top: 8rem;" class="fade-in">
-                    <div class="image-container aspect-[3/4]">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1qQkaDiyVDWnhdUxqAkxALOg4UCvmj99wiSE4v8Z-TeqHpoU170CTPEyhJotfvuMltk-8RO3LBqSXpiKc3-5Peuj_1fhEVBqm_NHNDa9CQEiJDKAQ5Old4tW10QSfU7bFM8xqx7ifzn1P2IhREw3a_mJpE6D6ysVRJX8wxC6HUz6hf4np54ZaSdi28xme1OeeeXstRugWOVjnm8s-fwlDr_SwYY278K1uXaJ79wq7QjVz5MLzpmUEpB7KGrQy0dfZ7gLjBvdH-IYC" alt="Ethereal Grace">
-                        <div class="reveal-overlay-content">
-                            <h2 class="text-3xl mb-2 italic">Ethereal Grace</h2>
-                            <div class="uppercase tracking-widest text-[10px] opacity-60">Udaipur • 2024</div>
-                        </div>
+                 <!-- Video 3 -->
+                 <div class="video-item fade-in">
+                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
+                        <video src="https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" 
+                               controls class="w-full h-full object-cover"></video>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-2xl italic font-serif">Ethereal Grace</h3>
+                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Udaipur, India • MMXXIV</p>
+                    </div>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="video-item fade-in">
+                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
+                        <video src="https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" 
+                               controls class="w-full h-full object-cover"></video>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-2xl italic font-serif">Desert Bloom</h3>
+                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Dubai, UAE • MMXXIV</p>
+                    </div>
+                </div>
+
+                <!-- Video 5 -->
+                <div class="video-item fade-in">
+                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
+                        <video src="https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" 
+                               controls class="w-full h-full object-cover"></video>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-2xl italic font-serif">Wild Hearts</h3>
+                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Reykjavik, Iceland • MMXXIII</p>
+                    </div>
+                </div>
+
+                <!-- Video 6 -->
+                <div class="video-item fade-in">
+                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
+                        <video src="https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" 
+                               controls class="w-full h-full object-cover"></video>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-2xl italic font-serif">Sunset Symphony</h3>
+                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Santorini, Greece • MMXXIV</p>
+                    </div>
+                </div>
+
+                <!-- Video 7 -->
+                <div class="video-item fade-in">
+                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
+                        <video src="https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" 
+                               controls class="w-full h-full object-cover"></video>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-2xl italic font-serif">Midnight Muse</h3>
+                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">New York, USA • MMXXIV</p>
+                    </div>
+                </div>
+
+                <!-- Video 8 -->
+                <div class="video-item fade-in">
+                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
+                        <video src="https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" 
+                               controls class="w-full h-full object-cover"></video>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-2xl italic font-serif">Floral Reverie</h3>
+                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">London, UK • MMXXIII</p>
                     </div>
                 </div>
             </div>
+
+            <div class="flex justify-center mt-32">
+                <button id="load-more-btn" class="btn btn-outline py-5 px-16 tracking-vogue uppercase text-xs">Load More Films</button>
+            </div>
         </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const loadMoreBtn = document.getElementById('load-more-btn');
+                const grid = document.getElementById('video-grid');
+                
+                const moreVideos = [
+                    { title: "Azure Dreams", location: "Maldives • MMXXIV", src: "https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" },
+                    { title: "Golden Hour", location: "Tuscany, Italy • MMXXIII", src: "https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" },
+                    { title: "Urban Elegance", location: "Tokyo, Japan • MMXXIV", src: "https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" },
+                    { title: "Mountain Peak", location: "Swiss Alps • MMXXIV", src: "https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" }
+                ];
+
+                loadMoreBtn.addEventListener('click', () => {
+                    moreVideos.forEach(v => {
+                        const item = document.createElement('div');
+                        item.className = 'video-item fade-in';
+                        item.innerHTML = `
+                            <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
+                                <video src="${v.src}" controls class="w-full h-full object-cover"></video>
+                            </div>
+                            <div class="mt-8">
+                                <h3 class="text-2xl italic font-serif">${v.title}</h3>
+                                <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">${v.location}</p>
+                            </div>
+                        `;
+                        grid.appendChild(item);
+                        // Trigger animation if observer is running or just manual
+                        setTimeout(() => item.classList.add('visible'), 50);
+                    });
+                    loadMoreBtn.style.display = 'none'; // Hide button after loading all
+                });
+            });
+        </script>
     </main>
 
     <footer class="py-24 px-12 bg-surface-lowest border-t border-outline">
@@ -186,20 +306,16 @@
                         Links</h5>
                     <div class="w-10 h-px bg-primary mb-6"></div>
                     <ul class="space-y-6">
-                        <li><a href="index.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Home</a>
+                        <li><a href="index.html" class="text-sm uppercase tracking-widest transition-colors">Home</a>
                         </li>
-                        <li><a href="films.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Films</a>
+                        <li><a href="films.html" class="text-sm uppercase tracking-widest transition-colors">Films</a>
                         </li>
-                        <li><a href="album.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Albums</a>
+                        <li><a href="album.html" class="text-sm uppercase tracking-widest transition-colors">Albums</a>
                         </li>
                         <li><a href="packages.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Packages</a>
                         </li>
-                        <li><a href="about.html"
-                                class="text-sm uppercase tracking-widest transition-colors">About</a>
+                        <li><a href="about.html" class="text-sm uppercase tracking-widest transition-colors">About</a>
                         </li>
                         <li><a href="testimonials.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Testimonials</a>
@@ -218,4 +334,5 @@
 
     <script src="js/animations.js"></script>
 </body>
+
 </html>

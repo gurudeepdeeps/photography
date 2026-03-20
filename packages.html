@@ -1,62 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Packages | Sagar Doddamani</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@200;300;400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@200;300;400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/animations.css">
     <style>
         .packages-header {
-            padding-top: 12rem;
-            padding-bottom: 8rem;
+            padding-top: 4rem;
+            padding-bottom: 1rem;
         }
-        .packages-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-        .package-card {
-            border: 1px solid rgba(255,255,255,0.05);
-            background: var(--color-surface-lowest);
-            padding: 4rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: var(--transition-medium);
-        }
-        .package-card:hover {
-            background: var(--color-surface-container);
-            border-color: var(--color-primary);
-        }
-        .package-card.featured {
-            border: 1px solid var(--color-primary);
-            position: relative;
-        }
-        .featured-badge {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--color-primary);
-            color: var(--color-on-primary);
-            padding: 0.5rem 1.5rem;
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.2rem;
-            text-transform: uppercase;
-        }
-        @media (max-width: 1024px) {
-            .packages-grid {
-                grid-template-columns: 1fr;
+
+        @media (max-width: 768px) {
+            .packages-header {
+                padding-top: 3.5rem;
+                padding-bottom: 0.5rem;
             }
         }
     </style>
 </head>
+
 <body>
     <header id="main-header">
         <div class="logo brand-headline"><a href="index.html">SAGAR DODDAMANI</a></div>
@@ -92,73 +64,74 @@
 
     <main>
         <div class="packages-header px-12 max-w-7xl">
-            <h1 class="text-6xl md:text-8xl tracking-tight mb-8 stagger-in">Investment in <br> <span class="italic font-normal">Legacy.</span></h1>
-            <p class="text-xl font-light opacity-60 max-w-2xl stagger-in delay-1">
-                Artisanal wedding documentation crafted for those who value the quiet nuances, the raw emotions, and the timeless narrative of their union.
+            <h1 class="brand-headline text-6xl md:text-8xl tracking-tight mb-4 stagger-in delay-1">Our <br> <span
+                    class="text-primary font-bold italic">Packages</span></h1>
+            <p class="text-xl font-light opacity-60 max-w-2xl fade-in delay-1">
+                Artisanal wedding documentation crafted for those who value the quiet nuances, the raw emotions, and the
+                timeless narrative of their union.
             </p>
         </div>
 
-        <section class="px-12 py-24 max-w-7xl">
-            <div class="packages-grid">
-                <!-- Package 1 -->
-                <div class="package-card fade-in">
-                    <div>
-                        <span class="tracking-vogue uppercase text-[10px] opacity-40 mb-8 block">Collection I</span>
-                        <h2 class="text-3xl mb-4 italic">The Essential Story</h2>
-                        <p class="text-sm opacity-50 mb-12">Focusing on the core moments of your celebration with elegance and precision.</p>
-                        <ul class="space-y-4 mb-16 text-sm opacity-70">
-                            <li>• 6 Hours Coverage</li>
-                            <li>• Primary Cinematographer</li>
-                            <li>• High Res Digital gallery</li>
-                            <li>• 3-Minute Highlight Film</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-serif mb-8">$3,500</div>
-                        <a href="contact.html" class="btn btn-outline block text-center">Inquire</a>
-                    </div>
+        <section class="pt-12 pb-24 px-12 max-w-7xl mx-auto pkg-section">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 packages-row-mobile">
+                <!-- Collection I -->
+                <div class="collection-card fade-in">
+                    <h4>Silver</h4>
+                    <p class="description">For the couples seeking a focused, elegant preservation of their day's core
+                        heartbeats. A minimalist approach with maximum emotional impact.</p>
+                    <ul class="features">
+                        <li>8 Hours Coverage</li>
+                        <li>Primary Cinematographer</li>
+                        <li>4K Master Narrative</li>
+                        <li class="package-price">₹40,000</li>
+                    </ul>
+                    <a href="https://wa.me/916363770057?text=Hi%20Sagar!%20I'm%20interested%20in%20the%20Silver%20package.%20Please%20share%20more%20details."
+                        target="_blank" rel="noopener"
+                        class="btn btn-outline px-16 py-5 inline-flex items-center gap-4 group">
+                        Enquire on WhatsApp
+                    </a>
                 </div>
 
-                <!-- Package 2 Featured -->
-                <div class="package-card featured fade-in delay-1">
+                <!-- Collection II Featured -->
+                <div class="collection-card featured fade-in delay-1">
                     <div class="featured-badge">Most Popular</div>
-                    <div>
-                        <span class="tracking-vogue uppercase text-[10px] text-primary mb-8 block">Collection II</span>
-                        <h2 class="text-3xl mb-4 italic">The Full Experience</h2>
-                        <p class="text-sm opacity-50 mb-12">Our signature storytelling approach. A comprehensive documentation of your entire journey.</p>
-                        <ul class="space-y-4 mb-16 text-sm opacity-70">
-                            <li>• 10 Hours Coverage</li>
-                            <li>• Two Cinematographers</li>
-                            <li>• Drone & Aerial Perspectives</li>
-                            <li>• 10-Minute Feature Narrative</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-serif mb-8">$5,800</div>
-                        <a href="contact.html" class="btn btn-primary block text-center">Secure Your Date</a>
-                    </div>
+                    <h4>Platinum</h4>
+                    <p class="description">Our signature cinematic journey. An expansive documentation that captures the
+                        profound atmosphere and unspoken connection of your celebration.</p>
+                    <ul class="features">
+                        <li>Full Day Coverage</li>
+                        <li>Two Lead Artists</li>
+                        <li>Drone Perspective</li>
+                        <li class="package-price">₹1,20,000</li>
+                    </ul>
+                    <a href="https://wa.me/916363770057?text=Hi%20Sagar!%20I'm%20interested%20in%20the%20Platinum%20package.%20Please%20share%20more%20details."
+                        target="_blank" rel="noopener"
+                        class="btn btn-outline px-16 py-5 inline-flex items-center gap-4 group">
+                        Enquire on WhatsApp
+                    </a>
                 </div>
 
-                <!-- Package 3 -->
-                <div class="package-card fade-in delay-2">
-                    <div>
-                        <span class="tracking-vogue uppercase text-[10px] opacity-40 mb-8 block">Collection III</span>
-                        <h2 class="text-3xl mb-4 italic">The Anthology</h2>
-                        <p class="text-sm opacity-50 mb-12">The ultimate collection for the couple who desires every detail preserved for generations.</p>
-                        <ul class="space-y-4 mb-16 text-sm opacity-70">
-                            <li>• Multi-Day Coverage</li>
-                            <li>• Lead & Associate Artists</li>
-                            <li>• Bespoke Hand-Crafted Album</li>
-                            <li>• Raw Documentary Footage</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-serif mb-8">$8,200</div>
-                        <a href="contact.html" class="btn btn-outline block text-center">Inquire</a>
-                    </div>
+                <!-- Collection III -->
+                <div class="collection-card fade-in delay-2">
+                    <h4>Gold</h4>
+                    <p class="description">The ultimate archival collection. Multi-day documentation and a bespoke
+                        hand-crafted legacy for those who desire every nuance preserved.</p>
+                    <ul class="features">
+                        <li>Multi-Day Coverage</li>
+                        <li>Full Artistic Team</li>
+                        <li>Italian Leather Album</li>
+                        <li class="package-price">₹60,000</li>
+                    </ul>
+                    <a href="https://wa.me/916363770057?text=Hi%20Sagar!%20I'm%20interested%20in%20the%20Gold%20package.%20Please%20share%20more%20details."
+                        target="_blank" rel="noopener"
+                        class="btn btn-outline px-16 py-5 inline-flex items-center gap-4 group">
+                        Enquire on WhatsApp
+                    </a>
                 </div>
             </div>
         </section>
+
+        <div class="section-divider-gold fade-in"></div>
     </main>
 
     <footer class="py-24 px-12 bg-surface-lowest border-t border-outline">
@@ -217,20 +190,16 @@
                         Links</h5>
                     <div class="w-10 h-px bg-primary mb-6"></div>
                     <ul class="space-y-6">
-                        <li><a href="index.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Home</a>
+                        <li><a href="index.html" class="text-sm uppercase tracking-widest transition-colors">Home</a>
                         </li>
-                        <li><a href="films.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Films</a>
+                        <li><a href="films.html" class="text-sm uppercase tracking-widest transition-colors">Films</a>
                         </li>
-                        <li><a href="album.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Albums</a>
+                        <li><a href="album.html" class="text-sm uppercase tracking-widest transition-colors">Albums</a>
                         </li>
                         <li><a href="packages.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Packages</a>
                         </li>
-                        <li><a href="about.html"
-                                class="text-sm uppercase tracking-widest transition-colors">About</a>
+                        <li><a href="about.html" class="text-sm uppercase tracking-widest transition-colors">About</a>
                         </li>
                         <li><a href="testimonials.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Testimonials</a>
@@ -249,4 +218,5 @@
 
     <script src="js/animations.js"></script>
 </body>
+
 </html>

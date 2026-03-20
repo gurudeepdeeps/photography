@@ -7,7 +7,7 @@ header {
     left: 0;
     width: 100%;
     z-index: 1000;
-    padding: 0.8rem 3rem; /* Reduced height */
+    padding: 0.4rem 3rem; /* More compact height for desktops */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,7 +19,7 @@ header {
 }
 
 header.scrolled {
-    padding: 0.5rem 3rem; /* Even more compact when scrolled */
+    padding: 0.3rem 3rem; /* Minimum height when scrolling */
     background: rgba(10, 10, 10, 0.6);
     border-bottom-color: rgba(255, 255, 255, 0.15);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -31,6 +31,14 @@ header.scrolled {
     letter-spacing: 0.1em;
     color: var(--color-on-surface);
     text-transform: uppercase;
+    white-space: nowrap; /* Keep on one row */
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.1rem; /* Smaller font on very narrow screens */
+        letter-spacing: 0.05em;
+    }
 }
 
 nav ul {
@@ -234,12 +242,12 @@ nav a:hover, nav a.active {
     transform: translate(-50%, -50%);
     background: var(--color-primary);
     color: black;
-    padding: 0.5rem 1.5rem;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
+    padding: 0.3rem 1.2rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 700;
-    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
     transition: all 0.5s ease;
 }
 
@@ -264,7 +272,7 @@ nav a:hover, nav a.active {
 
 .collection-card .description {
     font-size: 0.9rem;
-    opacity: 0.5;
+    opacity: 0.9;
     margin-bottom: 3rem;
     line-height: 1.8;
 }
@@ -272,12 +280,23 @@ nav a:hover, nav a.active {
 .collection-card .features {
     padding: 0;
     margin: 0 0 4rem 0;
-    font-size: 0.75rem;
-    opacity: 0.7;
+    font-size: 0.95rem;
+    opacity: 0.9;
 }
 
 .collection-card .features li {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+    padding-left: 0;
+}
+
+.package-price {
+    color: var(--color-primary) !important;
+    font-weight: 700 !important;
+    margin-top: 2rem !important;
+    font-size: 1.8rem !important;
+    list-style: none !important;
+    letter-spacing: 0.05em !important;
 }
 
 .collection-card .btn-text {
@@ -324,4 +343,185 @@ nav a:hover, nav a.active {
     position: relative;
     z-index: 10;
     text-align: center;
+}
+/* Responsive Packages Row for Mobile */
+@media (max-width: 768px) {
+    .packages-row-mobile {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+
+    .packages-row-mobile .collection-card,
+    .packages-row-mobile .package-card {
+        padding: 3rem 1.5rem !important;
+        text-align: center !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+    }
+
+    .packages-row-mobile .collection-card.featured {
+        border-color: rgba(212, 175, 55, 0.3) !important;
+        background: rgba(212, 175, 55, 0.03) !important;
+    }
+
+    .packages-row-mobile .collection-card h4,
+    .packages-row-mobile .package-card h2 {
+        font-size: 1.8rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .packages-row-mobile .collection-card .description,
+    .packages-row-mobile .package-card p {
+        font-size: 0.9rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .packages-row-mobile .collection-card .features,
+    .packages-row-mobile .package-card ul {
+        font-size: 0.85rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .packages-row-mobile .collection-card .btn,
+    .packages-row-mobile .package-card .btn {
+        width: 100% !important;
+        padding: 1rem !important;
+        font-size: 0.75rem !important;
+    }
+
+    .packages-row-mobile .package-price {
+        font-size: 1.5rem !important;
+        margin-top: 1.5rem !important;
+    }
+
+    .featured-badge {
+        font-size: 0.6rem !important;
+        padding: 0.4rem 1rem !important;
+        top: 0 !important;
+    }
+}
+
+/* Targeted padding reduction for mobile packages section */
+@media (max-width: 768px) {
+    .pkg-section {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+    .pkg-section h2 {
+        margin-bottom: 1.5rem !important;
+        font-size: 2.5rem !important;
+    }
+}
+
+/* Utility for fitting and filling images */
+.object-contain {
+    object-fit: contain !important;
+}
+
+.object-cover {
+    object-fit: cover !important;
+}
+
+/* Lightbox Gallery */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 5, 5, 0.98);
+    backdrop-filter: blur(20px);
+    z-index: 2000;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox.active {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    transform: scale(0.95);
+    transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.lightbox.active .lightbox-content img {
+    transform: scale(1);
+}
+
+.lightbox-caption {
+    margin-top: 2rem;
+    text-align: center;
+    color: var(--color-on-surface);
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2010;
+}
+
+.lightbox-close {
+    top: 2rem;
+    right: 2rem;
+}
+
+.lightbox-close .material-symbols-outlined {
+    font-size: 2.5rem;
+    font-weight: 200;
+}
+
+.lightbox-prev {
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lightbox-next {
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lightbox-prev .material-symbols-outlined,
+.lightbox-next .material-symbols-outlined {
+    font-size: 3rem;
+    font-weight: 100;
+    opacity: 0.3;
+}
+
+.lightbox-prev:hover .material-symbols-outlined,
+.lightbox-next:hover .material-symbols-outlined {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.lightbox-close:hover {
+    transform: rotate(90deg);
 }

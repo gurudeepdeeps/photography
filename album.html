@@ -1,39 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Albums | Sagar Doddamani</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@200;300;400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@200;300;400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/animations.css">
     <style>
         .album-header {
-            padding-top: 12rem;
-            padding-bottom: 4rem;
+            padding-top: 6rem;
+            padding-bottom: 3rem;
         }
-        .album-title {
-            font-size: clamp(4rem, 10vw, 8rem);
+
+        .album-header h1 {
+            font-size: clamp(3rem, 7vw, 6rem);
             line-height: 0.9;
+            margin-bottom: 2.5rem;
         }
-        .gallery-masonry {
-            columns: 2;
-            column-gap: 2rem;
-        }
-        .masonry-item {
-            break-inside: avoid;
-            margin-bottom: 2rem;
-        }
+
         @media (max-width: 768px) {
-            .gallery-masonry {
-                columns: 1;
+            .album-header {
+                padding-top: 8rem;
+                padding-bottom: 2rem;
+            }
+
+            .album-header h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .album-item h3 {
+                font-size: 1.5rem !important;
+                line-height: 1.2;
+                max-width: 100%;
+                flex: 1 1 auto;
+            }
+
+            .album-item .flex-wrap {
+                gap: 1rem !important;
+                align-items: flex-start !important; /* Align to top */
+            }
+
+            .album-item .btn {
+                padding: 0.6rem 1.2rem !important;
+                font-size: 9px !important;
+                min-width: 110px;
+                text-align: center;
+                align-self: flex-start; /* Stop stretching vertically */
+                white-space: nowrap;
             }
         }
     </style>
 </head>
+
 <body>
     <header id="main-header">
         <div class="logo brand-headline"><a href="index.html">SAGAR DODDAMANI</a></div>
@@ -49,7 +76,7 @@
         <div class="flex items-center gap-6">
             <a href="contact.html" class="btn btn-outline hidden-mobile">Contact</a>
             <button class="mobile-menu-btn" id="menu-open">
-                <span class="material-icons">menu</span>
+                <span class="material-symbols-outlined">menu</span>
             </button>
         </div>
     </header>
@@ -67,36 +94,198 @@
         <a href="contact.html">Contact</a>
     </div>
 
-    <main class="px-12 max-w-7xl">
-        <div class="album-header">
-            <span class="tracking-vogue uppercase text-xs text-outline mb-6 block stagger-in">Client Galleries</span>
-            <h1 class="album-title stagger-in delay-1">The Silent <br> <span class="italic font-normal">Narrative</span></h1>
+    <main>
+        <div class="album-header px-12 max-w-7xl">
+            <h1 class="stagger-in">Client <br> <span class="italic text-primary">Galleries & Albums</span></h1>
+            <div class="flex flex-col md:flex-row justify-between items-end gap-12 stagger-in delay-2">
+                <p class="max-w-xl text-lg font-light opacity-70">
+                    A curated look into the silent narratives we've captured. Every album is a testament to the raw and
+                    real moments of your most cherished days.
+                </p>
+            </div>
         </div>
 
-        <section class="py-24">
-            <div class="flex justify-between items-baseline gap-6 border-b border-outline pb-8 mb-16 fade-in">
-                <h2 class="text-5xl italic opacity-80">Elena & Julian</h2>
-                <div class="flex gap-8 opacity-50 uppercase tracking-[0.2em] text-[10px]">
-                    <button class="hover:text-primary">Share</button>
-                    <button class="hover:text-primary">Download</button>
+        <section class="px-12 py-24 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24" id="album-grid">
+                <!-- Album 1 -->
+                <div class="album-item fade-in">
+                    <div class="image-wrapper aspect-video bg-surface-container overflow-hidden relative group">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ_80naCijI5-ex90eo6FDIVbzWnTiaojPVIhTSixpVaA7NUc6SAY-K20W6hh9zsgodU24i_Lqqw68VPEODZMVcph3u1bU-DN4lamrOEzvLLKlTX6-CglkQlufqqbmc8r5_T1VhTMW9RxTwWgIr7ShM-P0aNuMGepo_ftK11HPwxgfhQ1Ep3P2lvUXx3XT9xE8YZOGC1w1Hep4RZrfWlRRim_QNyvwJrauXNDm2YQvz2KpJ3Lz2DFVNGunSczhiZZvzj5RrZdoYNaB"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors duration-500">
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex items-center justify-between gap-6 flex-wrap">
+                            <h3 class="text-2xl italic font-serif">Elena & Julian</h3>
+                            <a href="#" class="btn btn-outline py-2 px-4 text-[10px] uppercase tracking-widest whitespace-nowrap ml-auto" data-album="elena-julian">View Full Album</a>
+                        </div>
+                        <p class="text-[10px] tracking-[0.3em] uppercase text-primary/60 mt-3">October 12, 2024</p>
+                    </div>
+                </div>
+
+                <!-- Album 2 -->
+                <div class="album-item fade-in">
+                    <div class="image-wrapper aspect-video bg-surface-container overflow-hidden relative group">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCadDFmWv5kx5QY13bV2ILbAs9C9zfZuyHikyxuzmYvv4KDI0-Elb7DjipfxmBQoCIbyIr5rZgeC8etF-38j2Ks_dMtKrl9KPQzj6zfHZ2gItOlIRGBAz1qEeydin6Jzhx16aYtY1DGPr6-g0zgha0__mWsYJqvl9FanzuKVwcbmgK0V_qyR2f4ysEikLZ4FMW3HR52LjMeFJnluTaaut7LEckEcZZ0-ozRP52uYTfYvl0Yilk03goupfKF6Oe5_z9vLbuFvd2dDRON"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors duration-500">
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex items-center justify-between gap-6 flex-wrap">
+                            <h3 class="text-2xl italic font-serif">Sophia & Marcus</h3>
+                            <a href="#" class="btn btn-outline py-2 px-4 text-[10px] uppercase tracking-widest whitespace-nowrap ml-auto" data-album="sophia-marcus">View Full Album</a>
+                        </div>
+                        <p class="text-[10px] tracking-[0.3em] uppercase text-primary/60 mt-3">September 24, 2023</p>
+                    </div>
+                </div>
+
+                <!-- Album 3 -->
+                <div class="album-item fade-in">
+                    <div class="image-wrapper aspect-video bg-surface-container overflow-hidden relative group">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT5u5PFHZdeEwKp4zytfp1dqnaeDYV11CvpoveY065-AkaKkQyaB42zbniR6oCWTb45aY397VgdUS-MtlAUPwBQRQLZaqbgHBWA4aoMidbGiGTwUgEmC8jQk5hUA2C44wfV8mlKm_O-fNMIBx-IS15d2spc053tDCRyHgYrr7A_M-7IZKLmX2vH0T6tzFOLPqhYi7qt5CkQiR_E819W_r8ToJ3yxliby0FWx7E5nJUhS5a3HHg2TZe9K-yuz8fF6LXwMLsxbPVb-Ru"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors duration-500">
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex items-center justify-between gap-6 flex-wrap">
+                            <h3 class="text-2xl italic font-serif">Isabella & David</h3>
+                            <a href="#" class="btn btn-outline py-2 px-4 text-[10px] uppercase tracking-widest whitespace-nowrap ml-auto" data-album="isabella-david">View Full Album</a>
+                        </div>
+                        <p class="text-[10px] tracking-[0.3em] uppercase text-primary/60 mt-3">June 15, 2024</p>
+                    </div>
+                </div>
+
+                <!-- Album 4 -->
+                <div class="album-item fade-in">
+                    <div class="image-wrapper aspect-video bg-surface-container overflow-hidden relative group">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcg72GJAQeo-OxC2Pv5V8AzSbFVCkQjo6WIicLAAd7BDKyWNMF0IdqBIVT8O39ixDFwQ8wD0u-QaGrA1DZXVeUwjioXjd-UObqxdxkmgPCTI1ruhisaYoORlDQzYcwzSm_s8Lc8MO5eOU47Nq6zTnpPqzFTy6h2mNM6I2cbUpUYT9hH1vL0lvHwYifE9TGKZMY7ftOmm3X5xZL9VS21HOIfnwfuXiK-VyfEw9046I3OH_BEFH0a6SecTQyHY8W54cDwfxWMhIdabx6"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors duration-500">
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex items-center justify-between gap-6 flex-wrap">
+                            <h3 class="text-2xl italic font-serif">Maya & Aarav</h3>
+                            <a href="#" class="btn btn-outline py-2 px-4 text-[10px] uppercase tracking-widest whitespace-nowrap ml-auto" data-album="maya-aarav">View Full Album</a>
+                        </div>
+                        <p class="text-[10px] tracking-[0.3em] uppercase text-primary/60 mt-3">March 08, 2024</p>
+                    </div>
+                </div>
+
+                <!-- Album 5 -->
+                <div class="album-item fade-in">
+                    <div class="image-wrapper aspect-video bg-surface-container overflow-hidden relative group">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT5u5PFHZdeEwKp4zytfp1dqnaeDYV11CvpoveY065-AkaKkQyaB42zbniR6oCWTb45aY397VgdUS-MtlAUPwBQRQLZaqbgHBWA4aoMidbGiGTwUgEmC8jQk5hUA2C44wfV8mlKm_O-fNMIBx-IS15d2spc053tDCRyHgYrr7A_M-7IZKLmX2vH0T6tzFOLPqhYi7qt5CkQiR_E819W_r8ToJ3yxliby0FWx7E5nJUhS5a3HHg2TZe9K-yuz8fF6LXwMLsxbPVb-Ru"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors duration-500">
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex items-center justify-between gap-6 flex-wrap">
+                            <h3 class="text-2xl italic font-serif">Nora & Leo</h3>
+                            <a href="#" class="btn btn-outline py-2 px-4 text-[10px] uppercase tracking-widest whitespace-nowrap ml-auto" data-album="nora-leo">View Full Album</a>
+                        </div>
+                        <p class="text-[10px] tracking-[0.3em] uppercase text-primary/60 mt-3">December 15, 2023</p>
+                    </div>
+                </div>
+
+                <!-- Album 6 -->
+                <div class="album-item fade-in">
+                    <div class="image-wrapper aspect-video bg-surface-container overflow-hidden relative group">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcg72GJAQeo-OxC2Pv5V8AzSbFVCkQjo6WIicLAAd7BDKyWNMF0IdqBIVT8O39ixDFwQ8wD0u-QaGrA1DZXVeUwjioXjd-UObqxdxkmgPCTI1ruhisaYoORlDQzYcwzSm_s8Lc8MO5eOU47Nq6zTnpPqzFTy6h2mNM6I2cbUpUYT9hH1vL0lvHwYifE9TGKZMY7ftOmm3X5xZL9VS21HOIfnwfuXiK-VyfEw9046I3OH_BEFH0a6SecTQyHY8W54cDwfxWMhIdabx6"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors duration-500">
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex items-center justify-between gap-6 flex-wrap">
+                            <h3 class="text-2xl italic font-serif">Grace & Harry</h3>
+                            <a href="#" class="btn btn-outline py-2 px-4 text-[10px] uppercase tracking-widest whitespace-nowrap ml-auto" data-album="grace-harry">View Full Album</a>
+                        </div>
+                        <p class="text-[10px] tracking-[0.3em] uppercase text-primary/60 mt-3">February 20, 2024</p>
+                    </div>
+                </div>
+
+                <!-- Album 7 -->
+                <div class="album-item fade-in">
+                    <div class="image-wrapper aspect-video bg-surface-container overflow-hidden relative group">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ_80naCijI5-ex90eo6FDIVbzWnTiaojPVIhTSixpVaA7NUc6SAY-K20W6hh9zsgodU24i_Lqqw68VPEODZMVcph3u1bU-DN4lamrOEzvLLKlTX6-CglkQlufqqbmc8r5_T1VhTMW9RxTwWgIr7ShM-P0aNuMGepo_ftK11HPwxgfhQ1Ep3P2lvUXx3XT9xE8YZOGC1w1Hep4RZrfWlRRim_QNyvwJrauXNDm2YQvz2KpJ3Lz2DFVNGunSczhiZZvzj5RrZdoYNaB"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors duration-500">
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex items-center justify-between gap-6 flex-wrap">
+                            <h3 class="text-2xl italic font-serif">Zara & Liam</h3>
+                            <a href="#" class="btn btn-outline py-2 px-4 text-[10px] uppercase tracking-widest whitespace-nowrap ml-auto" data-album="zara-liam">View Full Album</a>
+                        </div>
+                        <p class="text-[10px] tracking-[0.3em] uppercase text-primary/60 mt-3">January 05, 2024</p>
+                    </div>
+                </div>
+
+                <!-- Album 8 -->
+                <div class="album-item fade-in">
+                    <div class="image-wrapper aspect-video bg-surface-container overflow-hidden relative group">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCadDFmWv5kx5QY13bV2ILbAs9C9zfZuyHikyxuzmYvv4KDI0-Elb7DjipfxmBQoCIbyIr5rZgeC8etF-38j2Ks_dMtKrl9KPQzj6zfHZ2gItOlIRGBAz1qEeydin6Jzhx16aYtY1DGPr6-g0zgha0__mWsYJqvl9FanzuKVwcbmgK0V_qyR2f4ysEikLZ4FMW3HR52LjMeFJnluTaaut7LEckEcZZ0-ozRP52uYTfYvl0Yilk03goupfKF6Oe5_z9vLbuFvd2dDRON"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors duration-500">
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <div class="flex items-center justify-between gap-6 flex-wrap">
+                            <h3 class="text-2xl italic font-serif">Clara & Ethan</h3>
+                            <a href="#" class="btn btn-outline py-2 px-4 text-[10px] uppercase tracking-widest whitespace-nowrap ml-auto" data-album="clara-ethan">View Full Album</a>
+                        </div>
+                        <p class="text-[10px] tracking-[0.3em] uppercase text-primary/60 mt-3">April 14, 2024</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="gallery-masonry">
-                <div class="masonry-item image-container-v fade-in">
-                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcg72GJAQeo-OxC2Pv5V8AzSbFVCkQjo6WIicLAAd7BDKyWNMF0IdqBIVT8O39ixDFwQ8wD0u-QaGrA1DZXVeUwjioXjd-UObqxdxkmgPCTI1ruhisaYoORlDQzYcwzSm_s8Lc8MO5eOU47Nq6zTnpPqzFTy6h2mNM6I2cbUpUYT9hH1vL0lvHwYifE9TGKZMY7ftOmm3X5xZL9VS21HOIfnwfuXiK-VyfEw9046I3OH_BEFH0a6SecTQyHY8W54cDwfxWMhIdabx6" alt="Gallery item">
-                </div>
-                <div class="masonry-item image-container-v fade-in delay-1">
-                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT5u5PFHZdeEwKp4zytfp1dqnaeDYV11CvpoveY065-AkaKkQyaB42zbniR6oCWTb45aY397VgdUS-MtlAUPwBQRQLZaqbgHBWA4aoMidbGiGTwUgEmC8jQk5hUA2C44wfV8mlKm_O-fNMIBx-IS15d2spc053tDCRyHgYrr7A_M-7IZKLmX2vH0T6tzFOLPqhYi7qt5CkQiR_E819W_r8ToJ3yxliby0FWx7E5nJUhS5a3HHg2TZe9K-yuz8fF6LXwMLsxbPVb-Ru" alt="Gallery item">
-                </div>
-                <div class="masonry-item image-container-v fade-in delay-2">
-                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ_80naCijI5-ex90eo6FDIVbzWnTiaojPVIhTSixpVaA7NUc6SAY-K20W6hh9zsgodU24i_Lqqw68VPEODZMVcph3u1bU-DN4lamrOEzvLLKlTX6-CglkQlufqqbmc8r5_T1VhTMW9RxTwWgIr7ShM-P0aNuMGepo_ftK11HPwxgfhQ1Ep3P2lvUXx3XT9xE8YZOGC1w1Hep4RZrfWlRRim_QNyvwJrauXNDm2YQvz2KpJ3Lz2DFVNGunSczhiZZvzj5RrZdoYNaB" alt="Gallery item">
-                </div>
-                <div class="masonry-item image-container-v fade-in delay-3">
-                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbq_y0Ox8cO5gO5iSO7wassgX1hwqz3nGov5_5JU1yLIr-p-ORiz5xPc5iWV_55ac4jPeVEZ0qjwmD0OwwyV837qMKE4IMustfayf2_D1eNhGzNiCdVrrmCu3bJWbQxUh0DeVJKI9Hfb4eYPdsRx0Rhr0EDPToFg5N4IVQRnM4VofGs6IK78KU-Zkw4F3m3a-Tg8OYYIK4-W9TpcBr0lJYNp9zhxgf-nlNP5yOncDiNqn9LW91CrGCMas56t9U30ivPjoHtg0RUI2r" alt="Gallery item">
-                </div>
+            <div class="flex justify-center mt-32">
+                <button id="load-more-btn" class="btn btn-outline py-5 px-16 tracking-vogue uppercase text-xs">Load More
+                    Albums</button>
             </div>
         </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const loadMoreBtn = document.getElementById('load-more-btn');
+                const grid = document.getElementById('album-grid');
+
+                const moreAlbums = [
+                    { id: "siena-luca", title: "Siena & Luca", date: "May 05, 2024", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQ_80naCijI5-ex90eo6FDIVbzWnTiaojPVIhTSixpVaA7NUc6SAY-K20W6hh9zsgodU24i_Lqqw68VPEODZMVcph3u1bU-DN4lamrOEzvLLKlTX6-CglkQlufqqbmc8r5_T1VhTMW9RxTwWgIr7ShM-P0aNuMGepo_ftK11HPwxgfhQ1Ep3P2lvUXx3XT9xE8YZOGC1w1Hep4RZrfWlRRim_QNyvwJrauXNDm2YQvz2KpJ3Lz2DFVNGunSczhiZZvzj5RrZdoYNaB" },
+                    { id: "luna-sol", title: "Luna & Sol", date: "July 12, 2023", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCadDFmWv5kx5QY13bV2ILbAs9C9zfZuyHikyxuzmYvv4KDI0-Elb7DjipfxmBQoCIbyIr5rZgeC8etF-38j2Ks_dMtKrl9KPQzj6zfHZ2gItOlIRGBAz1qEeydin6Jzhx16aYtY1DGPr6-g0zgha0__mWsYJqvl9FanzuKVwcbmgK0V_qyR2f4ysEikLZ4FMW3HR52LjMeFJnluTaaut7LEckEcZZ0-ozRP52uYTfYvl0Yilk03goupfKF6Oe5_z9vLbuFvd2dDRON" },
+                    { id: "aria-silas", title: "Aria & Silas", date: "September 30, 2023", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDT5u5PFHZdeEwKp4zytfp1dqnaeDYV11CvpoveY065-AkaKkQyaB42zbniR6oCWTb45aY397VgdUS-MtlAUPwBQRQLZaqbgHBWA4aoMidbGiGTwUgEmC8jQk5hUA2C44wfV8mlKm_O-fNMIBx-IS15d2spc053tDCRyHgYrr7A_M-7IZKLmX2vH0T6tzFOLPqhYi7qt5CkQiR_E819W_r8ToJ3yxliby0FWx7E5nJUhS5a3HHg2TZe9K-yuz8fF6LXwMLsxbPVb-Ru" },
+                    { id: "jade-orion", title: "Jade & Orion", date: "June 22, 2024", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBcg72GJAQeo-OxC2Pv5V8AzSbFVCkQjo6WIicLAAd7BDKyWNMF0IdqBIVT8O39ixDFwQ8wD0u-QaGrA1DZXVeUwjioXjd-UObqxdxkmgPCTI1ruhisaYoORlDQzYcwzSm_s8Lc8MO5eOU47Nq6zTnpPqzFTy6h2mNM6I2cbUpUYT9hH1vL0lvHwYifE9TGKZMY7ftOmm3X5xZL9VS21HOIfnwfuXiK-VyfEw9046I3OH_BEFH0a6SecTQyHY8W54cDwfxWMhIdabx6" }
+                ];
+
+                loadMoreBtn.addEventListener('click', () => {
+                    moreAlbums.forEach(a => {
+                        const item = document.createElement('div');
+                        item.className = 'album-item fade-in';
+                        item.innerHTML = `
+                            <div class="image-wrapper aspect-video bg-surface-container overflow-hidden relative group">
+                                <img src="${a.img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors duration-500"></div>
+                            </div>
+                            <div class="mt-8">
+                                <div class="flex items-center justify-between gap-6 flex-wrap">
+                                    <h3 class="text-2xl italic font-serif">${a.title}</h3>
+                                    <a href="#" class="btn btn-outline py-2 px-4 text-[10px] uppercase tracking-widest whitespace-nowrap ml-auto" data-album="${a.id}">View Full Album</a>
+                                </div>
+                                <p class="text-[10px] tracking-[0.3em] uppercase text-primary/60 mt-3">${a.date}</p>
+                            </div>
+                        `;
+                        grid.appendChild(item);
+                        setTimeout(() => item.classList.add('visible'), 50);
+                    });
+                    loadMoreBtn.style.display = 'none';
+                });
+            });
+        </script>
     </main>
 
     <footer class="py-24 px-12 bg-surface-lowest border-t border-outline">
@@ -155,20 +344,16 @@
                         Links</h5>
                     <div class="w-10 h-px bg-primary mb-6"></div>
                     <ul class="space-y-6">
-                        <li><a href="index.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Home</a>
+                        <li><a href="index.html" class="text-sm uppercase tracking-widest transition-colors">Home</a>
                         </li>
-                        <li><a href="films.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Films</a>
+                        <li><a href="films.html" class="text-sm uppercase tracking-widest transition-colors">Films</a>
                         </li>
-                        <li><a href="album.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Albums</a>
+                        <li><a href="album.html" class="text-sm uppercase tracking-widest transition-colors">Albums</a>
                         </li>
                         <li><a href="packages.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Packages</a>
                         </li>
-                        <li><a href="about.html"
-                                class="text-sm uppercase tracking-widest transition-colors">About</a>
+                        <li><a href="about.html" class="text-sm uppercase tracking-widest transition-colors">About</a>
                         </li>
                         <li><a href="testimonials.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Testimonials</a>
@@ -185,6 +370,21 @@
         </div>
     </footer>
 
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close"><span class="material-symbols-outlined">close</span></button>
+        <button class="lightbox-prev"><span class="material-symbols-outlined">arrow_back_ios</span></button>
+        <button class="lightbox-next"><span class="material-symbols-outlined">arrow_forward_ios</span></button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Gallery Image">
+            <div class="lightbox-caption">
+                <h4 id="lightbox-title" class="font-serif italic text-xl"></h4>
+                <p id="lightbox-counter" class="text-[10px] tracking-widest uppercase opacity-60 mt-2"></p>
+            </div>
+        </div>
+    </div>
+
     <script src="js/animations.js"></script>
+    <script src="js/album-gallery.js"></script>
 </body>
+
 </html>
