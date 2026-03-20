@@ -1,33 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Sagar Doddamani</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@200;300;400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@200;300;400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/animations.css">
     <style>
-        .contact-header {
-            padding-top: 12rem;
-            padding-bottom: 6rem;
+        /* Hero Section */
+        .contact-hero {
+            position: relative;
+            padding: 8rem 2rem 2rem;
+            background: url('images/contact-hero.jpg') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
         }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 6rem;
+
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, #0a0a0a 100%);
+            backdrop-filter: blur(5px);
         }
-        @media (max-width: 1024px) {
-            .contact-grid {
-                grid-template-columns: 1fr;
+
+        .contact-hero h1 {
+            position: relative;
+            font-size: 3rem;
+            color: #fff;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .contact-hero p {
+            position: relative;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 500px;
+        }
+
+        /* Contact Cards */
+        .contact-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 10;
+            padding-bottom: 2rem;
+        }
+
+        .contact-card {
+            background: #151515;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #fff;
+            min-width: 250px;
+        }
+
+        .contact-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+        }
+
+        .contact-card .material-symbols-outlined {
+            color: var(--color-primary);
+            background: rgba(212, 175, 55, 0.1);
+            /* Assuming primary is a gold-ish color */
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-size: 1.2rem;
+        }
+
+        .contact-card span:not(.material-symbols-outlined) {
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            .contact-cards-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+                width: 100%;
+                padding-left: 1rem;
+                padding-right: 1rem;
             }
+            .contact-card {
+                min-width: 0;
+                padding: 1rem 0.5rem;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            .contact-card span:not(.material-symbols-outlined) {
+                font-size: 0.7rem;
+                word-break: break-word;
+            }
+        }
+
+        /* Form Section */
+        .contact-wrapper {
+            background: #0a0a0a;
+            padding: 0 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-form-box {
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-row>div {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+
+        .form-group-custom {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group-custom label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: #fff;
+            margin-bottom: 0.8rem;
+        }
+
+        .form-group-custom input[type="text"],
+        .form-group-custom input[type="email"],
+        .form-group-custom input[type="tel"],
+        .form-group-custom textarea {
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group-custom input::placeholder,
+        .form-group-custom textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-group-custom input[type="text"]:focus,
+        .form-group-custom input[type="email"]:focus,
+        .form-group-custom input[type="tel"]:focus,
+        .form-group-custom textarea:focus {
+            border-color: var(--color-primary);
+        }
+
+        /* Checkboxes */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .custom-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .custom-checkbox input {
+            display: none;
+        }
+
+        .checkmark {
+            width: 20px;
+            height: 20px;
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .custom-checkbox input:checked+.checkmark {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        .custom-checkbox input:checked+.checkmark::after {
+            content: '✓';
+            color: #000;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Custom Submit Button */
+        .submit-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn-submit-form {
+            background: var(--color-primary);
+            color: #000;
+            border: none;
+            padding: 1rem 3rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit-form:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
     </style>
 </head>
+
 <body>
     <header id="main-header">
         <div class="logo brand-headline"><a href="index.html">SAGAR DODDAMANI</a></div>
@@ -62,81 +300,88 @@
     </div>
 
     <main>
-        <div class="contact-header px-12 max-w-7xl">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-                <div class="lg:col-span-8">
-                    <span class="tracking-vogue uppercase text-xs text-primary mb-8 block stagger-in">Inquiry</span>
-                    <h1 class="text-6xl md:text-8xl tracking-tight leading-tight stagger-in delay-1">
-                        Let's preserve <br> <span class="italic font-light">your silent narrative.</span>
-                    </h1>
-                </div>
-                <div class="lg:col-span-4 pb-4 stagger-in delay-2">
-                    <p class="opacity-60 font-light leading-relaxed max-w-sm">
-                        Available for select wedding commissions worldwide. Each story is approached with editorial precision and emotional depth.
-                    </p>
+        <!-- Hero Section -->
+        <section class="contact-hero">
+            <h1>Contact Us</h1>
+            <p>Get in touch with us today and let us help you with any questions or inquiries you may have regarding our
+                services.</p>
+
+            <div class="contact-cards-container">
+                <a href="mailto:gurudeepv55@gmail.com" class="contact-card">
+                    <span class="material-symbols-outlined">mail</span>
+                    <span>gurudeepv55@gmail.com</span>
+                </a>
+                <a href="tel:+916363770057" class="contact-card">
+                    <span class="material-symbols-outlined">call</span>
+                    <span>+91 6363 770 057</span>
+                </a>
+                <a href="https://wa.me/916363770057" target="_blank" class="contact-card">
+                    <span class="material-symbols-outlined">chat</span>
+                    <span>Chat via WhatsApp</span>
+                </a>
+                <div class="contact-card">
+                    <span class="material-symbols-outlined">location_on</span>
+                    <span>Bengaluru - Karnataka</span>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <section class="px-12 py-24 max-w-7xl">
-            <div class="contact-grid">
-                <!-- Info Column -->
-                <div class="md:col-span-5 space-y-24 order-2 lg:order-1 fade-in">
-                    <div class="space-y-12">
-                        <div>
-                            <h3 class="text-2xl italic mb-4">Direct Connection</h3>
-                            <div class="flex flex-col gap-4 text-on-surface-variant font-light tracking-wide">
-                                <a href="mailto:hello@sagardoddamani.com" class="hover:text-primary">hello@sagardoddamani.com</a>
-                                <a href="tel:+910000000000" class="hover:text-primary">+91 (000) 000-0000</a>
-                            </div>
+        <!-- Form Section wrapper -->
+        <section class="contact-wrapper">
+            <div class="contact-form-box fade-in">
+                <form id="inquiry-form">
+
+                    <div class="form-group-custom" style="margin-bottom: 2rem;">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Enter your Name" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group-custom">
+                            <label>Email</label>
+                            <input type="email" placeholder="Enter your Email" required>
                         </div>
-                        <div>
-                            <h3 class="text-2xl italic mb-4">Global Reach</h3>
-                            <p class="text-on-surface-variant font-light leading-relaxed">
-                                Currently based in Mumbai & Dubai.<br>
-                                Traveling globally for 2024 - 2025 season.
-                            </p>
-                        </div>
-                        <div class="pt-8">
-                            <a href="https://wa.me/#" class="flex items-center gap-4 group">
-                                <span class="w-12 h-[1px] bg-primary group-hover:w-20 transition-all duration-700"></span>
-                                <span class="text-primary uppercase tracking-vogue text-[10px]">Chat via WhatsApp</span>
-                            </a>
+                        <div class="form-group-custom">
+                            <label>Phone Number</label>
+                            <input type="tel" placeholder="Enter your Phone Number" required>
                         </div>
                     </div>
-                </div>
 
-                <!-- Form Column -->
-                <div class="md:col-span-7 order-1 lg:order-2 fade-in delay-1">
-                    <form id="inquiry-form" class="space-y-12">
-                        <div class="form-group">
-                            <label class="form-label">The Couple</label>
-                            <input type="text" class="form-input" placeholder="Your full names" required>
+                    <div class="form-group-custom" style="margin-bottom: 2rem;">
+                        <label>Why are you contacting us?</label>
+                        <div class="checkbox-grid">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="reason" value="weddings">
+                                <span class="checkmark"></span>
+                                Weddings
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="reason" value="pre-wedding">
+                                <span class="checkmark"></span>
+                                Pre-Wedding
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="reason" value="maternity">
+                                <span class="checkmark"></span>
+                                Maternity
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="reason" value="others">
+                                <span class="checkmark"></span>
+                                Others
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Digital Address</label>
-                            <input type="email" class="form-input" placeholder="Email address" required>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                            <div class="form-group">
-                                <label class="form-label">Date</label>
-                                <input type="text" class="form-input" placeholder="DD/MM/YY" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Location</label>
-                                <input type="text" class="form-input" placeholder="City, Country" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Tell your story</label>
-                            <textarea class="form-input" placeholder="Briefly describe your vision..." rows="4" style="resize: none;" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-full py-6 flex items-center justify-center gap-4">
-                            Send Inquiry
-                            <span class="material-symbols-outlined text-sm">arrow_right_alt</span>
-                        </button>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <label>Your Message</label>
+                        <textarea placeholder="Enter your Message" rows="4" style="resize: none;" required></textarea>
+                    </div>
+
+                    <div class="submit-container fade-in">
+                        <button type="submit" class="btn-submit-form">Submit</button>
+                    </div>
+
+                </form>
             </div>
         </section>
     </main>
@@ -197,20 +442,16 @@
                         Links</h5>
                     <div class="w-10 h-px bg-primary mb-6"></div>
                     <ul class="space-y-6">
-                        <li><a href="index.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Home</a>
+                        <li><a href="index.html" class="text-sm uppercase tracking-widest transition-colors">Home</a>
                         </li>
-                        <li><a href="films.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Films</a>
+                        <li><a href="films.html" class="text-sm uppercase tracking-widest transition-colors">Films</a>
                         </li>
-                        <li><a href="album.html"
-                                class="text-sm uppercase tracking-widest transition-colors">Albums</a>
+                        <li><a href="album.html" class="text-sm uppercase tracking-widest transition-colors">Albums</a>
                         </li>
                         <li><a href="packages.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Packages</a>
                         </li>
-                        <li><a href="about.html"
-                                class="text-sm uppercase tracking-widest transition-colors">About</a>
+                        <li><a href="about.html" class="text-sm uppercase tracking-widest transition-colors">About</a>
                         </li>
                         <li><a href="testimonials.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Testimonials</a>
@@ -229,4 +470,5 @@
 
     <script src="js/animations.js"></script>
 </body>
+
 </html>
