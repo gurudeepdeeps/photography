@@ -402,6 +402,74 @@ nav a:hover, nav a.active {
     }
 }
 
+/* Testimonial Card */
+.testimonial-card-dribbble {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 32px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.testimonial-card-dribbble:hover {
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-primary);
+}
+
+.card-quote-icon {
+    color: var(--color-primary);
+    font-size: 3rem;
+    line-height: 1;
+    opacity: 0.4;
+}
+
+.card-body-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 300;
+    flex-grow: 1;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-name-bold {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.author-title-sub {
+    font-size: 0.8rem;
+    color: #777;
+}
+
 /* Targeted padding reduction for mobile packages section */
 @media (max-width: 768px) {
     .pkg-section {
