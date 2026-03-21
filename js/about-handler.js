@@ -13,6 +13,23 @@
         sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
 
+    /**
+     * Detailed backend logger
+     */
+    const logBackend = (operation, status, details, error = null) => {
+        const timestamp = new Date().toLocaleTimeString();
+        const styles = {
+            SUCCESS: 'background: #064e3b; color: #34d399; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+            ERROR: 'background: #450a0a; color: #f87171; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+            INFO: 'background: #1e3a8a; color: #60a5fa; padding: 2px 5px; border-radius: 2px; font-weight: bold;'
+        };
+        
+        console.group(`Backend: ${operation} - ${status} (${timestamp})`);
+        console.log(`%c${status}`, styles[status] || '', details);
+        if (error) console.error('Full Error Object:', error);
+        console.groupEnd();
+    };
+
     async function initAbout() {
         if (window.aboutInitialized) return;
         window.aboutInitialized = true;
@@ -28,7 +45,10 @@
                 .select('*')
                 .single();
             
-            if (!pError && profile) {
+            if (pError) {
+                logBackend('Fetch About Profile', 'ERROR', 'Could not retrieve about profile', pError);
+            } else if (profile) {
+                logBackend('Fetch About Profile', 'SUCCESS', 'Profile loaded');
                 if (document.getElementById('aboutNameText')) document.getElementById('aboutNameText').innerText = profile.name;
                 if (document.getElementById('aboutSubNameText')) document.getElementById('aboutSubNameText').innerText = profile.sub_name;
                 if (document.getElementById('aboutBioText')) {
@@ -53,7 +73,10 @@
                 .select('*')
                 .order('display_order', { ascending: true });
             
-            if (!vError && values && values.length > 0) {
+            if (vError) {
+                logBackend('Fetch About Values', 'ERROR', 'Could not retrieve values list', vError);
+            } else if (values && values.length > 0) {
+                logBackend('Fetch About Values', 'SUCCESS', `Loaded ${values.length} values`);
                 const grid = document.getElementById('aboutValuesGrid');
                 if (grid) {
                     grid.innerHTML = values.map((val, index) => `
@@ -66,7 +89,7 @@
                 }
             }
         } catch (err) {
-            console.error('[About] Handler error:', err);
+            logBackend('About Content Initialization', 'ERROR', 'Unexpected failure', err);
         }
     }
 

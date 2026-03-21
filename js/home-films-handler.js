@@ -10,6 +10,23 @@ try {
     console.error("Supabase API init error (Home Films):", e);
 }
 
+/**
+ * Detailed backend logger
+ */
+const logBackend = (operation, status, details, error = null) => {
+    const timestamp = new Date().toLocaleTimeString();
+    const styles = {
+        SUCCESS: 'background: #064e3b; color: #34d399; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+        ERROR: 'background: #450a0a; color: #f87171; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+        INFO: 'background: #1e3a8a; color: #60a5fa; padding: 2px 5px; border-radius: 2px; font-weight: bold;'
+    };
+    
+    console.group(`Backend: ${operation} - ${status} (${timestamp})`);
+    console.log(`%c${status}`, styles[status] || '', details);
+    if (error) console.error('Full Error Object:', error);
+    console.groupEnd();
+};
+
 async function initHomeSelectedWorks() {
     if (!sbClient) return;
 
@@ -17,7 +34,7 @@ async function initHomeSelectedWorks() {
     if (!container) return;
 
     try {
-        const { data: films, error } = await sbClient
+        const { data: films, error = null } = await sbClient
             .from('films')
             .select('*')
             .eq('is_selected_work', true)
@@ -26,6 +43,7 @@ async function initHomeSelectedWorks() {
             .order('created_at', { ascending: false });
 
         if (error) throw error;
+        logBackend('Fetch Selected Works', 'SUCCESS', `Loaded ${films.length} featured films`);
 
         if (!films || films.length === 0) {
             container.innerHTML = '<div class="col-span-full py-20 text-center opacity-40 uppercase tracking-widest text-xs">More cinematic works coming soon...</div>';
@@ -63,7 +81,7 @@ async function initHomeSelectedWorks() {
         }
 
     } catch (err) {
-        console.error('[Selected Works] Fetch error:', err);
+        logBackend('Fetch Selected Works', 'ERROR', 'Could not retrieve featured portfolio', err);
         container.innerHTML = '<div class="col-span-full py-20 text-center text-primary/60 uppercase tracking-widest text-xs">Unable to load curated portfolio</div>';
     }
 }

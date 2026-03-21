@@ -12,6 +12,23 @@
         sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
 
+    /**
+     * Detailed backend logger
+     */
+    const logBackend = (operation, status, details, error = null) => {
+        const timestamp = new Date().toLocaleTimeString();
+        const styles = {
+            SUCCESS: 'background: #064e3b; color: #34d399; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+            ERROR: 'background: #450a0a; color: #f87171; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+            INFO: 'background: #1e3a8a; color: #60a5fa; padding: 2px 5px; border-radius: 2px; font-weight: bold;'
+        };
+        
+        console.group(`Backend: ${operation} - ${status} (${timestamp})`);
+        console.log(`%c${status}`, styles[status] || '', details);
+        if (error) console.error('Full Error Object:', error);
+        console.groupEnd();
+    };
+
     async function initHomeAbout() {
         console.log('[Home About] Starting sync...');
         if (!sbClient) {
@@ -27,12 +44,12 @@
                 .single();
             
             if (error) {
-                console.error('[Home About] Fetch error:', error);
+                logBackend('Fetch Home Profile', 'ERROR', 'Could not retrieve about profile for home page', error);
                 return;
             }
 
             if (profile) {
-                console.log('[Home About] Data received:', profile);
+                logBackend('Fetch Home Profile', 'SUCCESS', 'Profile loaded for home page display');
                 
                 // Update Name
                 const nameEl = document.getElementById('homeAboutName');
@@ -73,7 +90,7 @@
                 console.log('[Home About] UI Synced successfully.');
             }
         } catch (err) {
-            console.error('[Home About] Critical handler error:', err);
+            logBackend('Home About Context Initialization', 'ERROR', 'Unexpected handler failure', err);
         }
     }
 

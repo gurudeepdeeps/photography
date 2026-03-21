@@ -15,6 +15,23 @@ try {
     console.error('Failed to initialize Supabase:', e);
 }
 
+/**
+ * Detailed backend logger
+ */
+const logBackend = (operation, status, details, error = null) => {
+    const timestamp = new Date().toLocaleTimeString();
+    const styles = {
+        SUCCESS: 'background: #064e3b; color: #34d399; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+        ERROR: 'background: #450a0a; color: #f87171; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+        INFO: 'background: #1e3a8a; color: #60a5fa; padding: 2px 5px; border-radius: 2px; font-weight: bold;'
+    };
+    
+    console.group(`Backend: ${operation} - ${status} (${timestamp})`);
+    console.log(`%c${status}`, styles[status] || '', details);
+    if (error) console.error('Full Error Object:', error);
+    console.groupEnd();
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
     const loginForm = document.getElementById('loginForm');
     const loginError = document.getElementById('loginError');
@@ -46,17 +63,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             if (error) {
+                logBackend('Sign In', 'ERROR', `Failed login attempt for ${email}`, error);
                 loginError.innerText = error.message;
                 loginError.style.display = 'block';
                 loginSubmitBtn.innerText = 'AUTHENTICATE';
                 loginSubmitBtn.disabled = false;
             } else {
+                logBackend('Sign In', 'SUCCESS', `User ${email} authenticated successfully`);
                 loginSubmitBtn.innerText = 'ACCESS GRANTED';
                 setTimeout(() => {
                     window.location.href = 'admin.html';
                 }, 500);
             }
         } catch (err) {
+            logBackend('Sign In', 'ERROR', 'Unexpected error during authentication', err);
             loginError.innerText = "Error: " + err.message;
             loginError.style.display = 'block';
             loginSubmitBtn.innerText = 'AUTHENTICATE';
@@ -74,9 +94,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const { data: { session } } = await sbClient.auth.getSession();
         if (session) {
+            logBackend('Session Check', 'SUCCESS', `Active session found for ${session.user.email}`);
             window.location.href = 'admin.html';
+        } else {
+            logBackend('Session Check', 'INFO', 'No active session found');
         }
     } catch(err) {
-        console.warn("Could not check session (cookies blocked?):", err);
+        logBackend('Session Check', 'ERROR', 'Failed to check session', err);
     }
 });

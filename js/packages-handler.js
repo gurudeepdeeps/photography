@@ -14,6 +14,23 @@
     }
 
     /**
+     * Detailed backend logger
+     */
+    const logBackend = (operation, status, details, error = null) => {
+        const timestamp = new Date().toLocaleTimeString();
+        const styles = {
+            SUCCESS: 'background: #064e3b; color: #34d399; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+            ERROR: 'background: #450a0a; color: #f87171; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+            INFO: 'background: #1e3a8a; color: #60a5fa; padding: 2px 5px; border-radius: 2px; font-weight: bold;'
+        };
+        
+        console.group(`Backend: ${operation} - ${status} (${timestamp})`);
+        console.log(`%c${status}`, styles[status] || '', details);
+        if (error) console.error('Full Error Object:', error);
+        console.groupEnd();
+    };
+
+    /**
      * Fetch active packages from the database
      */
     async function fetchPublicPackages() {
@@ -26,9 +43,10 @@
                 .order('price', { ascending: true });
 
             if (error) throw error;
+            logBackend('Fetch Packages', 'SUCCESS', `Loaded ${data.length} active packages`);
             return data || [];
         } catch (err) {
-            console.error('[Packages] Error fetching packages:', err);
+            logBackend('Fetch Packages', 'ERROR', 'Could not retrieve packages', err);
             return [];
         }
     }

@@ -10,6 +10,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdGpxbmV5ZmViaG56dmdkd3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNDkzNzEsImV4cCI6MjA4OTYyNTM3MX0._gemg7d30T3uFDXRJ2We9itBFncioGkQ93rQElqU2lM';
     const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    /**
+     * Detailed backend logger
+     */
+    const logBackend = (operation, status, details, error = null) => {
+        const timestamp = new Date().toLocaleTimeString();
+        const styles = {
+            SUCCESS: 'background: #064e3b; color: #34d399; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+            ERROR: 'background: #450a0a; color: #f87171; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+            INFO: 'background: #1e3a8a; color: #60a5fa; padding: 2px 5px; border-radius: 2px; font-weight: bold;'
+        };
+        
+        console.group(`Backend: ${operation} - ${status} (${timestamp})`);
+        console.log(`%c${status}`, styles[status] || '', details);
+        if (error) console.error('Full Error Object:', error);
+        console.groupEnd();
+    };
+
     const albumGrid = document.getElementById('album-grid');
     const loadMoreBtn = document.getElementById('load-more-btn');
     const lightbox = document.getElementById('lightbox');
@@ -35,11 +52,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .order('event_date', { ascending: false });
 
             if (error) throw error;
+            logBackend('Fetch Public Albums', 'SUCCESS', `Loaded ${data.length} collections`);
 
             albums = data;
             renderAlbums(data);
         } catch (err) {
-            console.error('Error fetching albums:', err);
+            logBackend('Fetch Public Albums', 'ERROR', 'Could not retrieve album list', err);
             albumGrid.innerHTML = `<p class="col-span-full text-center opacity-50">FAILED TO LOAD COLLECTIONS</p>`;
         }
     }
@@ -97,6 +115,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .order('order_index', { ascending: true });
 
             if (error) throw error;
+            logBackend('Fetch Album Images', 'SUCCESS', `Loaded ${data.length} images for album: ${currentAlbumTitle}`);
 
             if (data && data.length > 0) {
                 currentAlbumPhotos = data;
@@ -106,7 +125,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 alert("This album has no images yet.");
             }
         } catch (err) {
-            console.error('Error fetching album images:', err);
+            logBackend('Fetch Album Images', 'ERROR', `Failed to open album: ${currentAlbumTitle}`, err);
         }
     };
 

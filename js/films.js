@@ -10,6 +10,23 @@ try {
     console.error("Supabase API init error:", e);
 }
 
+/**
+ * Detailed backend logger
+ */
+const logBackend = (operation, status, details, error = null) => {
+    const timestamp = new Date().toLocaleTimeString();
+    const styles = {
+        SUCCESS: 'background: #064e3b; color: #34d399; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+        ERROR: 'background: #450a0a; color: #f87171; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+        INFO: 'background: #1e3a8a; color: #60a5fa; padding: 2px 5px; border-radius: 2px; font-weight: bold;'
+    };
+    
+    console.group(`Backend: ${operation} - ${status} (${timestamp})`);
+    console.log(`%c${status}`, styles[status] || '', details);
+    if (error) console.error('Full Error Object:', error);
+    console.groupEnd();
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('video-grid');
     const loadMoreBtn = document.getElementById('load-more-btn');
@@ -45,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .range(from, to);
                 
             if (error) throw error;
+            logBackend('Fetch Gallery Films', 'SUCCESS', `Loaded ${films.length} films for page ${currentPage}`);
             
             if (films.length === 0 && reset) {
                 grid.innerHTML = '<div class="col-span-full text-center opacity-50 text-xl font-serif">More films coming soon...</div>';
@@ -88,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPage++;
             
         } catch(e) {
-            console.error(e);
+            logBackend('Fetch Gallery Films', 'ERROR', `Failed to load films (Page: ${currentPage})`, e);
             if (loadMoreBtn) loadMoreBtn.innerText = 'ERROR LOADING';
             if (loader) loader.classList.remove('active');
         }

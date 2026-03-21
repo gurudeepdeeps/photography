@@ -14,6 +14,23 @@
     }
 
     /**
+     * Detailed backend logger
+     */
+    const logBackend = (operation, status, details, error = null) => {
+        const timestamp = new Date().toLocaleTimeString();
+        const styles = {
+            SUCCESS: 'background: #064e3b; color: #34d399; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+            ERROR: 'background: #450a0a; color: #f87171; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+            INFO: 'background: #1e3a8a; color: #60a5fa; padding: 2px 5px; border-radius: 2px; font-weight: bold;'
+        };
+        
+        console.group(`Backend: ${operation} - ${status} (${timestamp})`);
+        console.log(`%c${status}`, styles[status] || '', details);
+        if (error) console.error('Full Error Object:', error);
+        console.groupEnd();
+    };
+
+    /**
      * Fetch published testimonials from the database
      */
     async function fetchPublicTestimonials() {
@@ -26,9 +43,10 @@
                 .order('created_at', { ascending: false });
 
             if (error) throw error;
+            logBackend('Fetch Testimonials', 'SUCCESS', `Loaded ${data.length} published testimonials`);
             return data || [];
         } catch (err) {
-            console.error('[Testimonials] Error fetching:', err);
+            logBackend('Fetch Testimonials', 'ERROR', 'Could not retrieve reviews', err);
             return [];
         }
     }
@@ -155,16 +173,20 @@
                     btn.innerHTML = 'Submitting...';
                     btn.disabled = true;
 
+                    const reviewData = {
+                        client_name,
+                        review_text,
+                        status: 'PENDING REVIEW',
+                        created_at: new Date().toISOString()
+                    };
+
+                    logBackend('Submit Testimonial', 'INFO', `Submitting review for ${client_name}`, reviewData);
                     const { error } = await sbClient
                         .from('testimonials')
-                        .insert([{
-                            client_name,
-                            review_text,
-                            status: 'PENDING REVIEW',
-                            created_at: new Date().toISOString()
-                        }]);
+                        .insert([reviewData]);
 
                     if (error) throw error;
+                    logBackend('Submit Testimonial', 'SUCCESS', 'Review submitted for moderation');
 
                     formContent.style.opacity = '0';
                     formContent.style.transform = 'translateY(-20px)';
@@ -183,7 +205,7 @@
                     }, 500);
 
                 } catch (err) {
-                    console.error('[Testimonials] Submission failed:', err);
+                    logBackend('Submit Testimonial', 'ERROR', 'Could not submit review', err);
                     alert('Submission failed: ' + err.message);
                     btn.innerHTML = 'Retry Submission';
                     btn.disabled = false;

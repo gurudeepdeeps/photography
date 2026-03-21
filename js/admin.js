@@ -17,6 +17,23 @@ try {
     console.error('Failed to initialize Supabase:', e);
 }
 
+/**
+ * Detailed backend logger
+ */
+const logBackend = (operation, status, details, error = null) => {
+    const timestamp = new Date().toLocaleTimeString();
+    const styles = {
+        SUCCESS: 'background: #064e3b; color: #34d399; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+        ERROR: 'background: #450a0a; color: #f87171; padding: 2px 5px; border-radius: 2px; font-weight: bold;',
+        INFO: 'background: #1e3a8a; color: #60a5fa; padding: 2px 5px; border-radius: 2px; font-weight: bold;'
+    };
+    
+    console.group(`Backend: ${operation} - ${status} (${timestamp})`);
+    console.log(`%c${status}`, styles[status] || '', details);
+    if (error) console.error('Full Error Object:', error);
+    console.groupEnd();
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
 
     // Elements
@@ -33,11 +50,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             try {
                 const { data: { session }, error } = await sbClient.auth.getSession();
                 if (error || !session) {
+                    logBackend('Auth Check', 'ERROR', 'Session invalid or not found. Redirecting to login...', error);
                     window.location.replace('login.html');
                     return;
                 }
+                logBackend('Auth Check', 'SUCCESS', `Session valid for: ${session.user.email}`);
             } catch (err) {
-                console.error("Auth check failed:", err);
+                logBackend('Auth Check', 'ERROR', 'Unexpected error during session check', err);
             }
         }
     }
@@ -56,11 +75,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         try {
             if (sbClient) {
-                await sbClient.auth.signOut();
-                console.log("Supabase signed out successfully");
+                const { error } = await sbClient.auth.signOut();
+                if (error) throw error;
+                logBackend('Sign Out', 'SUCCESS', 'Supabase session terminated');
             }
         } catch (err) {
-            console.error("Sign out error:", err);
+            logBackend('Sign Out', 'ERROR', 'Error during sign out', err);
         } finally {
             clearTimeout(timeout);
             window.location.href = 'login.html';
@@ -111,6 +131,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .range(from, to);
 
             if (error) throw error;
+            logBackend('Fetch Films', 'SUCCESS', `Loaded ${films.length} films for page ${currentFilmsPage} (Filter: ${currentFilmsFilter})`);
 
             // Update Stats
             const { count: filmCount } = await sbClient.from('films').select('*', { count: 'exact', head: true });
@@ -225,7 +246,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
         } catch (err) {
-            console.error('Error fetching films:', err);
+            logBackend('Fetch Films', 'ERROR', `Failed to load films (Page: ${currentFilmsPage}, Filter: ${currentFilmsFilter})`, err);
             if (reset) {
                 const errMsg = err.message || 'DATABASE FETCH ERROR';
                 listContainer.innerHTML = `<div class="text-error text-center py-8 tracking-widest uppercase text-sm">FAILED TO FETCH: ${errMsg}</div>`;
@@ -271,12 +292,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // 2. Remove from Storage
             if (filesToRemove.length > 0) {
-                console.log("Removing storage files:", filesToRemove);
-                await sbClient.storage.from('films_media').remove(filesToRemove);
+                logBackend('Delete Film Content', 'INFO', `Removing ${filesToRemove.length} storage files for film ${id}`);
+                const { error: storageErr } = await sbClient.storage.from('films_media').remove(filesToRemove);
+                if (storageErr) logBackend('Delete Film Content', 'ERROR', 'Some storage files could not be deleted', storageErr);
             }
 
             // 3. Remove from Database
-            await sbClient.from('films').delete().eq('id', id);
+            const { error: dbErr } = await sbClient.from('films').delete().eq('id', id);
+            if (dbErr) {
+                logBackend('Delete Film', 'ERROR', `Failed to delete record ${id} from DB`, dbErr);
+                throw dbErr;
+            }
+            
+            logBackend('Delete Film', 'SUCCESS', `Film '${film.title}' (${id}) removed successfully`);
             fetchFilms(true);
         }
     }
@@ -326,6 +354,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .range(from, to);
 
             if (error) throw error;
+            logBackend('Fetch Albums', 'SUCCESS', `Loaded ${albums.length} albums for page ${currentAlbumsPage}`);
 
             // Update Stats
             const { count: albumCount } = await sbClient.from('albums').select('*', { count: 'exact', head: true });
@@ -435,7 +464,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
         } catch (err) {
-            console.error('Error fetching albums:', err);
+            logBackend('Fetch Albums', 'ERROR', `Failed to load albums (Page: ${currentAlbumsPage})`, err);
             if (reset) {
                 const errMsg = err.message || 'DATABASE FETCH ERROR';
                 listContainer.innerHTML = `<div class="text-error text-center py-8 tracking-widest uppercase text-sm">FAILED TO FETCH: ${errMsg}</div>`;
@@ -466,6 +495,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const { data: packages, error } = await query;
             if (error) throw error;
+            logBackend('Fetch Packages', 'SUCCESS', `Loaded ${packages.length} packages`);
 
             if (packages.length === 0) {
                 listContainer.innerHTML = `<div class="opacity-50 text-center py-8 tracking-widest uppercase text-sm">NO ${currentPackagesFilter} PACKAGES FOUND</div>`;
@@ -509,7 +539,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             listContainer.innerHTML = html;
 
         } catch (err) {
-            console.error('Packages fetch failed:', err);
+            logBackend('Fetch Packages', 'ERROR', 'Could not retrieve packages list', err);
             listContainer.innerHTML = `<div class="text-error text-center py-8 text-xs uppercase">ERROR: ${err.message}</div>`;
         }
     }
@@ -568,8 +598,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const { error } = await sbClient.from('packages').delete().eq('id', id);
             if (error) throw error;
+            logBackend('Delete Package', 'SUCCESS', `Package ${id} deleted`);
             fetchPackages(true);
         } catch (err) {
+            logBackend('Delete Package', 'ERROR', `Failed to delete package ${id}`, err);
             alert('Delete failed: ' + err.message);
         }
     };
@@ -599,21 +631,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             try {
                 let error;
                 if (editingPackageId) {
-                    console.log('Updating package:', editingPackageId);
+                    logBackend('Update Package', 'INFO', `Updating package: ${editingPackageId}`, pkgData);
                     const result = await sbClient.from('packages').update(pkgData).eq('id', editingPackageId);
                     error = result.error;
                 } else {
-                    console.log('Inserting new package');
+                    logBackend('Insert Package', 'INFO', 'Inserting new package', pkgData);
                     const result = await sbClient.from('packages').insert([pkgData]);
                     error = result.error;
                 }
 
                 if (error) {
-                    console.error('Supabase error:', error);
                     throw error;
                 }
 
-                console.log('Package saved successfully!');
+                logBackend('Save Package', 'SUCCESS', editingPackageId ? `Updated package ${editingPackageId}` : 'Created new package');
                 pkgStatusMsg.innerText = editingPackageId ? 'PACKAGE UPDATED' : 'PACKAGE CREATED';
                 pkgStatusMsg.style.display = 'block';
                 pkgStatusMsg.className = 'text-xs text-primary tracking-widest uppercase mt-4 mb-4 text-center';
@@ -628,7 +659,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, 1000);
 
             } catch (err) {
-                console.error('Save package failed full error:', err);
+                logBackend('Save Package', 'ERROR', 'Could not save package to DB', err);
                 pkgStatusMsg.innerText = 'SAVE ERROR: ' + (err.message || 'Unknown error');
                 pkgStatusMsg.style.display = 'block';
                 pkgStatusMsg.className = 'text-xs text-error tracking-widest uppercase mt-4 mb-4 text-center';
@@ -674,6 +705,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .order('created_at', { ascending: false });
 
             if (error) throw error;
+            logBackend('Fetch Testimonials', 'SUCCESS', `Loaded ${testimonials.length} reviews (${currentTestimonialsFilter})`);
 
             if (testimonials.length === 0) {
                 listContainer.innerHTML = `<div class="opacity-50 text-center py-8 tracking-widest uppercase text-sm">NO ${currentTestimonialsFilter} TESTIMONIALS</div>`;
@@ -724,7 +756,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             listContainer.innerHTML = html;
 
         } catch (err) {
-            console.error('Testimonials fetch failed:', err);
+            logBackend('Fetch Testimonials', 'ERROR', 'Could not retrieve testimonials', err);
             listContainer.innerHTML = `<div class="text-error text-center py-8 text-xs uppercase">ERROR: ${err.message}</div>`;
         }
     }
@@ -827,11 +859,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const fileName = `${Date.now()}_${file.name.replace(/\s/g, '_')}`;
                     const filePath = `album_covers/${fileName}`;
                     
+                    logBackend('Upload Album Cover', 'INFO', `Uploading cover: ${fileName}`);
                     const { data, error: uploadError } = await sbClient.storage
                         .from('films_media') // Renaming bucket or using existing one
                         .upload(filePath, file);
                     
-                    if (uploadError) throw uploadError;
+                    if (uploadError) {
+                        logBackend('Upload Album Cover', 'ERROR', 'Cover upload failed', uploadError);
+                        throw uploadError;
+                    }
+                    logBackend('Upload Album Cover', 'SUCCESS', 'Cover uploaded successfully');
                     
                     const { data: { publicUrl } } = sbClient.storage
                         .from('films_media')
@@ -852,12 +889,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 let albumId = editingAlbumId;
                 let result;
                 if (editingAlbumId) {
+                    logBackend('Update Album', 'INFO', `Updating album record: ${editingAlbumId}`, albumData);
                     result = await sbClient.from('albums').update(albumData).eq('id', editingAlbumId).select();
                 } else {
+                    logBackend('Insert Album', 'INFO', 'Inserting new album record', albumData);
                     result = await sbClient.from('albums').insert([albumData]).select();
                 }
 
                 if (result.error) throw result.error;
+                logBackend('Save Album Record', 'SUCCESS', `Saved album: ${result.data[0].id}`);
                 
                 // Get the ID (either existing or newly created)
                 albumId = result.data[0].id;
@@ -907,6 +947,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
 
                 statusMsg.innerText = 'SUCCESS!';
+                logBackend('Save Album', 'SUCCESS', `Full album operation complete for ${albumId}`);
                 setTimeout(() => {
                     closeAddAlbumModal();
                     fetchAlbums(true);
@@ -915,7 +956,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, 1000);
 
             } catch (err) {
-                console.error('Save failed:', err);
+                logBackend('Save Album', 'ERROR', 'Overall album save operation failed', err);
                 statusMsg.innerText = 'ERROR: ' + (err.message || 'Unknown error');
                 saveBtn.disabled = false;
             }
@@ -955,6 +996,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .order('order_index', { ascending: true });
             
             if (error) throw error;
+            logBackend('Fetch Album Images', 'SUCCESS', `Loaded ${images.length} images for album ${albumId}`);
             
             if (images.length === 0) {
                 grid.innerHTML = '<div class="col-span-full opacity-50 text-center py-8 tracking-widest uppercase text-xs">NO PHOTOS IN THIS ALBUM. UPLOAD SOME BELOW.</div>';
@@ -980,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             grid.innerHTML = html;
             
         } catch (err) {
-            console.error('Images fetch failed:', err);
+            logBackend('Fetch Album Images', 'ERROR', `Failed to load images for album ${albumId}`, err);
             grid.innerHTML = `<div class="col-span-full text-error text-center py-8 text-xs uppercase">ERROR: ${err.message}</div>`;
         }
     }
@@ -1025,13 +1067,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 
                 status.innerText = 'SUCCESSFULLY UPLOADED ALL PHOTOS';
+                logBackend('Batch Gallery Upload', 'SUCCESS', `Uploaded ${files.length} images to album ${currentManagingAlbumId}`);
                 setTimeout(() => status.style.display = 'none', 3000);
                 uploadAlbumPhotos.value = ''; // Clear input
                 fetchAlbumImages(currentManagingAlbumId);
                 fetchAlbums(true); // Refresh main list to show count
                 
             } catch (err) {
-                console.error('Batch upload failed:', err);
+                logBackend('Batch Gallery Upload', 'ERROR', `Failed during batch upload to ${currentManagingAlbumId}`, err);
                 status.innerText = 'UPLOAD FAILED: ' + err.message;
             }
         });
@@ -1063,11 +1106,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .eq('id', id);
                 
             if (delErr) throw delErr;
+            logBackend('Delete Album Image', 'SUCCESS', `Deleted image record ${id}`);
             
             fetchAlbumImages(currentManagingAlbumId);
             
         } catch (err) {
-            console.error('Delete photo failed:', err);
+            logBackend('Delete Album Image', 'ERROR', `Failed to delete image ${id}`, err);
             alert('Failed to delete photo: ' + err.message);
         }
     }
@@ -1140,18 +1184,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             
             if(filesToRemove.length > 0) {
-                await sbClient.storage.from('films_media').remove(filesToRemove);
+                logBackend('Delete Album Assets', 'INFO', `Removing ${filesToRemove.length} storage files for album ${id}`);
+                const { error: storageErr } = await sbClient.storage.from('films_media').remove(filesToRemove);
+                if (storageErr) logBackend('Delete Album Assets', 'ERROR', 'Could not delete some album assets', storageErr);
             }
             
             // 2. Cascade delete will handle album_images if foreign key is set to CASCADE
             // If not, we might need to delete album_images manually
-            await sbClient.from('album_images').delete().eq('album_id', id);
-            await sbClient.from('albums').delete().eq('id', id);
+            const { error: imgDelErr } = await sbClient.from('album_images').delete().eq('album_id', id);
+            const { error: albDelErr } = await sbClient.from('albums').delete().eq('id', id);
             
+            if (imgDelErr || albDelErr) {
+                logBackend('Delete Album', 'ERROR', `DB deletion failed for album ${id}`, { imgDelErr, albDelErr });
+                throw (imgDelErr || albDelErr);
+            }
+
+            logBackend('Delete Album', 'SUCCESS', `Album '${album.title}' and all content removed`);
             fetchAlbums(true);
             
         } catch (err) {
-            console.error('Delete album failed:', err);
+            logBackend('Delete Album', 'ERROR', `Critical failure during album deletion ${id}`, err);
             alert('Delete failed: ' + err.message);
         }
     }
@@ -1210,14 +1262,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const testiData = { client_name, status, review_text, is_selected_home };
 
-                let res;
                 if (editingTestimonialId) {
+                    logBackend('Update Testimonial', 'INFO', `Updating review ${editingTestimonialId}`, testiData);
                     res = await sbClient.from('testimonials').update(testiData).eq('id', editingTestimonialId);
                 } else {
+                    logBackend('Insert Testimonial', 'INFO', 'Inserting new review', testiData);
                     res = await sbClient.from('testimonials').insert([testiData]);
                 }
 
                 if (res.error) throw res.error;
+                logBackend('Save Testimonial', 'SUCCESS', 'Review saved successfully');
 
                 statusMsg.innerText = 'SUCCESS!';
                 setTimeout(() => {
@@ -1228,7 +1282,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, 1000);
 
             } catch (err) {
-                console.error('Testimonial save failed:', err);
+                logBackend('Save Testimonial', 'ERROR', 'Failed to save review', err);
                 statusMsg.innerText = 'ERROR: ' + err.message;
                 saveBtn.disabled = false;
             }
@@ -1265,9 +1319,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const { error } = await sbClient.from('testimonials').delete().eq('id', id);
             if (error) throw error;
+            logBackend('Delete Testimonial', 'SUCCESS', `Deleted testimonial ${id}`);
             fetchTestimonials(true);
         } catch (err) {
-            console.error('Delete failed:', err);
+            logBackend('Delete Testimonial', 'ERROR', `Failed to delete testimonial ${id}`, err);
             alert('Delete failed: ' + err.message);
         }
     };
@@ -1281,9 +1336,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .eq('id', id);
 
             if (error) throw error;
+            logBackend('Approve Testimonial', 'SUCCESS', `Published testimonial ${id}`);
             fetchTestimonials(true);
         } catch (err) {
-            console.error('Approval failed:', err);
+            logBackend('Approve Testimonial', 'ERROR', `Failed to approve testimonial ${id}`, err);
             alert('Approval failed: ' + err.message);
         }
     };
@@ -1315,12 +1371,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 // 2. Batch remove from Storage
                 if (allFilesToRemove.length > 0) {
-                    await sbClient.storage.from('films_media').remove(allFilesToRemove);
+                    logBackend('Bulk Delete Assets', 'INFO', `Removing ${allFilesToRemove.length} storage files`);
+                    const { error: storageErr } = await sbClient.storage.from('films_media').remove(allFilesToRemove);
+                    if (storageErr) logBackend('Bulk Delete Assets', 'ERROR', 'Could not delete some bulk assets', storageErr);
                 }
 
                 deleteSelectedBtn.innerText = 'DELETING FROM DB...';
                 // 3. Batch remove from Database
-                await sbClient.from('films').delete().in('id', idsToDelete);
+                const { error: dbErr } = await sbClient.from('films').delete().in('id', idsToDelete);
+                if (dbErr) {
+                    logBackend('Bulk Delete Records', 'ERROR', 'Failed to delete records from DB', dbErr);
+                } else {
+                    logBackend('Bulk Delete', 'SUCCESS', `Successfully deleted ${idsToDelete.length} films`);
+                }
                 
                 deleteSelectedBtn.style.display = 'none';
                 deleteSelectedBtn.innerHTML = '<span class="material-icons text-sm">delete</span> <span>DELETE SELECTED (<span id="selectedCount">0</span>)</span>';
@@ -1504,12 +1567,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                         .from('films_media')
                         .upload(fileName, file);
 
-                    if (uploadError) throw new Error("Cover Upload Failed: " + uploadError.message);
+                    if (uploadError) {
+                        logBackend('Upload Film Cover', 'ERROR', 'Cover upload failed', uploadError);
+                        throw new Error("Cover Upload Failed: " + uploadError.message);
+                    }
 
                     const { data: publicUrlData } = sbClient.storage
                         .from('films_media')
                         .getPublicUrl(fileName);
                     coverImageUrl = publicUrlData.publicUrl;
+                    logBackend('Upload Film Cover', 'SUCCESS', `Cover available at ${coverImageUrl}`);
                 }
 
                 // 2. Upload Video File (if selected)
@@ -1517,16 +1584,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (statusMsg) statusMsg.innerText = 'UPLOADING VIDEO (THIS CAN TAKE SEVERAL MINUTES)...';
                     const file = videoInput.files[0];
                     const fileName = `video_${Date.now()}_${file.name}`;
+                    logBackend('Upload Film Video', 'INFO', `Uploading video: ${fileName}`);
                     const { data, error: uploadError } = await sbClient.storage
                         .from('films_media')
                         .upload(fileName, file);
 
-                    if (uploadError) throw new Error("Video Upload Failed: " + uploadError.message);
+                    if (uploadError) {
+                        logBackend('Upload Film Video', 'ERROR', 'Video upload failed', uploadError);
+                        throw new Error("Video Upload Failed: " + uploadError.message);
+                    }
 
                     const { data: publicUrlData } = sbClient.storage
                         .from('films_media')
                         .getPublicUrl(fileName);
                     videoUrl = publicUrlData.publicUrl;
+                    logBackend('Upload Film Video', 'SUCCESS', `Video available at ${videoUrl}`);
                 }
 
                 if (statusMsg) statusMsg.innerText = 'SAVING RECORD TO DATABASE...';
@@ -1558,18 +1630,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 let error;
                 if(editingFilmId) {
+                    logBackend('Update Film', 'INFO', `Updating film record: ${editingFilmId}`, insertData);
                     const res = await sbClient.from('films').update(insertData).eq('id', editingFilmId);
                     error = res.error;
                 } else {
+                    logBackend('Insert Film', 'INFO', 'Inserting new film record', insertData);
                     const res = await sbClient.from('films').insert([insertData]);
                     error = res.error;
                 }
 
                 if (error) throw error;
+                logBackend('Save Film', 'SUCCESS', `Film record saved successfully`);
                 closeAddFilmModal();
                 fetchFilms(true);
             } catch (err) {
-                console.error(err);
+                logBackend('Save Film', 'ERROR', 'Overall film save operation failed', err);
                 if (statusMsg) {
                     statusMsg.style.color = 'var(--color-error)';
                     statusMsg.innerText = 'ERROR: ' + err.message;
@@ -1802,6 +1877,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .single();
             
             if (error) throw error;
+            logBackend('Fetch About Profile', 'SUCCESS', 'Profile record loaded');
             if (data) {
                 document.getElementById('aboutName').value = data.name || '';
                 document.getElementById('aboutSubName').value = data.sub_name || '';
@@ -1889,16 +1965,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 
                 let error;
                 if (current) {
-                    console.log('[About] Updating existing profile id:', current.id);
+                    logBackend('Update Profile', 'INFO', `Updating profile record: ${current.id}`, profileData);
                     const result = await sbClient.from('about_profile').update(profileData).eq('id', current.id);
                     error = result.error;
                 } else {
-                    console.log('[About] Inserting new profile');
+                    logBackend('Insert Profile', 'INFO', 'Creating new profile record', profileData);
                     const result = await sbClient.from('about_profile').insert([profileData]);
                     error = result.error;
                 }
 
                 if (error) throw error;
+                logBackend('Save Profile', 'SUCCESS', 'Profile saved to database');
                 
                 if (status) {
                     status.style.color = '#2ecc71';
@@ -1933,6 +2010,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .order('display_order', { ascending: true });
             
             if (error) throw error;
+            logBackend('Fetch About Values', 'SUCCESS', `Loaded ${data.length} core values`);
             aboutValuesMap = {};
             
             if (!data || data.length === 0) {
@@ -2011,14 +2089,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 let error;
                 if (id) {
+                    logBackend('Update Value', 'INFO', `Updating core value: ${id}`, valData);
                     const result = await sbClient.from('about_values').update(valData).eq('id', id);
                     error = result.error;
                 } else {
+                    logBackend('Insert Value', 'INFO', 'Adding new core value', valData);
                     const result = await sbClient.from('about_values').insert([valData]);
                     error = result.error;
                 }
 
                 if (error) throw error;
+                logBackend('Save Value', 'SUCCESS', 'Core value saved successfully');
                 valueModal.classList.remove('active');
                 fetchAboutValues();
             } catch (err) {
@@ -2034,10 +2115,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.deleteAboutValue = async (id) => {
         if (!confirm('Are you sure you want to delete this core value?')) return;
         try {
+            logBackend('Delete Value', 'INFO', `Removing core value: ${id}`);
             const { error } = await sbClient.from('about_values').delete().eq('id', id);
             if (error) throw error;
+            logBackend('Delete Value', 'SUCCESS', 'Core value deleted');
             fetchAboutValues();
         } catch (err) {
+            logBackend('Delete Value', 'ERROR', 'Could not delete core value', err);
             alert('Delete failed: ' + err.message);
         }
     };
@@ -2079,11 +2163,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const { data, error } = await query;
             if (error) throw error;
+            logBackend('Fetch Enquiries', 'SUCCESS', `Loaded ${data.length} messages (Filter: ${activeEnquiryFilter})`);
 
             // Update Stats - Count UNREAD specifically for the dashboard stat
             const { count: unreadCount } = await sbClient.from('enquiries').select('*', { count: 'exact', head: true }).eq('status', 'UNREAD');
             const eStat = document.getElementById('statPendingInquiries');
             if(eStat && unreadCount !== undefined) {
+                logBackend('Fetch Unread Count', 'SUCCESS', `Current unread: ${unreadCount}`);
                 eStat.innerHTML = `${unreadCount} ${unreadCount > 0 ? '<span class="badge badge-error ml-2">URGENT</span>' : ''}`;
             }
 
@@ -2162,9 +2248,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Mark as READ in UI and DB immediately if UNREAD
         if (enq.status === 'UNREAD') {
-            await sbClient.from('enquiries').update({ status: 'READ' }).eq('id', id);
-            enq.status = 'READ';
-            renderEnquiryList(); 
+            logBackend('Mark Enquiry Read', 'INFO', `Updating status to READ for: ${id}`);
+            const { error } = await sbClient.from('enquiries').update({ status: 'READ' }).eq('id', id);
+            if (!error) {
+                logBackend('Mark Enquiry Read', 'SUCCESS', 'Status updated in DB');
+                enq.status = 'READ';
+                renderEnquiryList(); 
+            } else {
+                logBackend('Mark Enquiry Read', 'ERROR', 'Could not update status', error);
+            }
         }
 
         // Highlight active in list
@@ -2250,8 +2342,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     window.updateEnquiryStatus = async (id, status) => {
         try {
+            logBackend('Update Enquiry Status', 'INFO', `Setting status to ${status} for: ${id}`);
             const { error } = await sbClient.from('enquiries').update({ status }).eq('id', id);
             if (error) throw error;
+            logBackend('Update Enquiry Status', 'SUCCESS', `Status updated to ${status}`);
             
             // Re-fetch to update list and details view
             await fetchEnquiries();
@@ -2266,6 +2360,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 showEnquiryDetails(id);
             }
         } catch (err) {
+            logBackend('Update Enquiry Status', 'ERROR', `Failed to update status for ${id}`, err);
             alert('Update failed: ' + err.message);
         }
     };
@@ -2273,8 +2368,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.deleteEnquiry = async (id) => {
         if (!confirm('Are you sure you want to PERMANENTLY delete this enquiry?')) return;
         try {
+            logBackend('Delete Enquiry', 'INFO', `Deleting enquiry record: ${id}`);
             const { error } = await sbClient.from('enquiries').delete().eq('id', id);
             if (error) throw error;
+            logBackend('Delete Enquiry', 'SUCCESS', 'Enquiry record removed');
             
             await fetchEnquiries();
             document.getElementById('enquiryDetails').innerHTML = `
@@ -2284,6 +2381,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             `;
         } catch (err) {
+            logBackend('Delete Enquiry', 'ERROR', `Could not delete enquiry: ${id}`, err);
             alert('Delete failed: ' + err.message);
         }
     };
