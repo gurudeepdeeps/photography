@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 html += `
                     <div class="video-item fade-in visible">
                         <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
-                            <video src="${film.video_url || ''}" controls class="w-full h-full object-cover" poster="${film.cover_image_url || 'assets/cinematic-frame.jpg'}"></video>
+                            <video src="${film.video_url || ''}" controls class="w-full h-full object-cover" poster="${film.cover_image_url || 'assets/cinematic-frame.jpg'}" preload="metadata" playsinline onclick="if (event.offsetY < this.offsetHeight * 0.85) { event.preventDefault(); this.paused ? this.play() : this.pause(); }"></video>
                         </div>
                         <div class="mt-8">
                             <h3 class="text-2xl italic font-serif">${film.couple_name || film.title}</h3>

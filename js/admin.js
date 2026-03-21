@@ -138,7 +138,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                         
                         <div class="film-info">
                             <div class="text-[10px] text-primary tracking-widest uppercase mb-1">FILM TITLE</div>
-                            <h3 class="font-medium text-lg ${film.status === 'DRAFT' ? 'text-white/50' : ''}">${film.title}</h3>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-medium text-lg ${film.status === 'DRAFT' ? 'text-white/50' : ''}">${film.title}</h3>
+                                ${film.is_selected_work ? '<span class="material-icons text-primary text-sm" title="Featured on Home Page">stars</span>' : ''}
+                            </div>
+                            ${film.is_selected_work ? '<div class="text-[8px] text-primary uppercase tracking-widest font-bold">Featured on Home</div>' : ''}
                         </div>
                         
                         <div class="film-couple">
@@ -1351,6 +1355,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('addFilmCouple').value = film.couple_name || film.title || '';
         document.getElementById('addFilmCategory').value = film.category || 'WEDDING FILM';
         document.getElementById('addFilmStatus').value = film.status || 'PUBLISHED';
+        
+        const selectedCheckbox = document.getElementById('addFilmSelected');
+        if (selectedCheckbox) {
+            selectedCheckbox.checked = film.is_selected_work || false;
+        }
         // File inputs cannot be pre-filled due to browser security
         
         const titleEl = document.getElementById('filmModalTitle');
@@ -1407,6 +1416,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             setTimeout(() => {
                 addFilmModal.style.display = 'none';
                 if (newFilmForm) newFilmForm.reset();
+                
+                // Reset select explicitly if needed or rely on reset()
+                const selectedCheckbox = document.getElementById('addFilmSelected');
+                if (selectedCheckbox) selectedCheckbox.checked = false;
+
                 const statusMsg = document.getElementById('uploadStatusMsg');
                 if (statusMsg) {
                     statusMsg.style.display = 'none';
@@ -1440,11 +1454,25 @@ document.addEventListener('DOMContentLoaded', async () => {
             const title = coupleName; // Use Couple Name as Title
             const category = document.getElementById('addFilmCategory').value;
             const status = document.getElementById('addFilmStatus').value;
+            const isFeatured = document.getElementById('addFilmSelected').checked;
 
             const coverInput = document.getElementById('addFilmCover');
             const videoInput = document.getElementById('addFilmVideo');
 
             try {
+                // Limit Check: If user wants to feature this film, check how many are already featured
+                if (isFeatured) {
+                    const { count, error: countErr } = await sbClient
+                        .from('films')
+                        .select('*', { count: 'exact', head: true })
+                        .eq('is_selected_work', true)
+                        .not('id', 'eq', editingFilmId || '00000000-0000-0000-0000-000000000000'); // Exclude current film if editing
+
+                    if (countErr) throw countErr;
+                    if (count >= 4) {
+                        throw new Error(`You can only feature a maximum of 4 films. Please unfeature another film first.`);
+                    }
+                }
                 // If editing, start with the existing URLs so we don't clear them if the user didn't select new files
                 let coverImageUrl = editingFilmId ? window.filmsMap[editingFilmId].cover_image_url : 'assets/cinematic-frame.jpg'; 
                 let videoUrl = (editingFilmId && window.filmsMap[editingFilmId].video_url) ? window.filmsMap[editingFilmId].video_url : '';
@@ -1490,7 +1518,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     title: title,
                     couple_name: coupleName,
                     category: category,
-                    status: status
+                    status: status,
+                    is_selected_work: isFeatured
                 };
                 
                 // Add created_at only if it's a new insert
@@ -2043,22 +2072,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         list.innerHTML = enquiries.map(enq => {
-            const timeStr = new Date(enq.created_at).toLocaleDateString();
+            const date = new Date(enq.created_at);
+            const timeStr = date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
             const isUnread = enq.status === 'UNREAD';
-            const isActive = document.querySelector('.enquiry-item-card.active')?.getAttribute('data-id') === enq.id;
+            const isActive = document.querySelector('.enquiry-item.active')?.getAttribute('data-id') === enq.id;
 
             return `
-                <div class="enquiry-item-card p-4 border-b border-outline cursor-pointer transition-all hover:bg-white/5 border-l-2 ${isUnread ? 'border-primary' : 'border-transparent'} ${isActive ? 'bg-white/10 active' : ''}" 
+                <div class="enquiry-item ${isUnread ? 'unread' : ''} ${isActive ? 'active' : ''}" 
                      data-id="${enq.id}" onclick="showEnquiryDetails('${enq.id}')">
-                    <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-medium text-sm">${enq.client_name}</h4>
-                        <span class="text-[9px] opacity-40 tracking-widest">${timeStr}</span>
+                    <div class="enquiry-item-meta">
+                        <span>${enq.package_interest || 'ENQUIRY'}</span>
+                        <span>${timeStr}</span>
                     </div>
-                    <div class="text-xs opacity-60 mb-2 truncate">${enq.message}</div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-[9px] px-2 py-0.5 rounded-full border border-white/10 opacity-60 text-primary">${enq.package_interest || 'CONTACT'}</span>
-                        ${isUnread ? '<span class="text-primary text-[10px] uppercase tracking-widest font-bold">NEW</span>' : ''}
-                    </div>
+                    <h4 class="enquiry-item-title font-serif">${enq.client_name}</h4>
+                    <div class="enquiry-item-excerpt">${enq.message}</div>
+                    ${isUnread ? '<div class="unread-dot"></div>' : ''}
                 </div>
             `;
         }).join('');
@@ -2072,64 +2100,85 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (enq.status === 'UNREAD') {
             await sbClient.from('enquiries').update({ status: 'READ' }).eq('id', id);
             enq.status = 'READ';
-            renderEnquiryList(); // Refresh list to remove dot
+            renderEnquiryList(); 
         }
 
         // Highlight active in list
-        document.querySelectorAll('.enquiry-item-card').forEach(card => {
-            card.classList.remove('active', 'bg-white/10');
-            if (card.getAttribute('data-id') === id) card.classList.add('active', 'bg-white/10');
+        document.querySelectorAll('.enquiry-item').forEach(card => {
+            card.classList.remove('active');
+            if (card.getAttribute('data-id') === id) card.classList.add('active');
         });
 
         const details = document.getElementById('enquiryDetails');
         if (!details) return;
 
-        const timeStr = new Date(enq.created_at).toLocaleString();
+        const timeStr = new Date(enq.created_at).toLocaleString('en-IN', { 
+            day: '2-digit', month: 'long', year: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+        });
         const reasonsStr = Array.isArray(enq.reasons) ? enq.reasons.join(', ') : (enq.package_interest || 'General Inquiry');
 
         details.innerHTML = `
-            <div class="fade-in animate-slide-up h-full flex flex-col">
-                <div class="absolute top-4 right-4 flex gap-2">
-                    <button class="icon-btn-small" onclick="updateEnquiryStatus('${enq.id}', '${enq.status === 'ARCHIVED' ? 'READ' : 'ARCHIVED'}')" title="${enq.status === 'ARCHIVED' ? 'Undo Archive' : 'Archive'}">
-                        <span class="material-icons opacity-50">${enq.status === 'ARCHIVED' ? 'unarchive' : 'archive'}</span>
-                    </button>
-                    <button class="icon-btn-small text-error hover:text-error" onclick="deleteEnquiry('${enq.id}')" title="Delete Permanent">
-                        <span class="material-icons opacity-50 hover:opacity-100">delete</span>
-                    </button>
+            <div class="fade-in animate-slide-up h-full flex flex-col relative" style="padding: 2.5rem;">
+                <!-- New Flex Header for Actions -->
+                <div class="flex justify-between items-start mb-10 w-full border-b border-outline pb-8">
+                    <div class="flex flex-col">
+                        <div class="text-primary text-[10px] tracking-[0.6em] uppercase mb-2 opacity-70">Enquiry Received</div>
+                        <h2 class="font-serif text-4xl">${enq.client_name}</h2>
+                    </div>
+                    
+                    <div class="flex gap-3 mt-2">
+                        <button class="inbox-action-btn" onclick="updateEnquiryStatus('${enq.id}', '${enq.status === 'ARCHIVED' ? 'READ' : 'ARCHIVED'}')">
+                            <span class="material-icons text-base">${enq.status === 'ARCHIVED' ? 'unarchive' : 'archive'}</span>
+                            <span class="text-[9px]">${enq.status === 'ARCHIVED' ? 'UNARCHIVE' : 'ARCHIVE'}</span>
+                        </button>
+                        <button class="inbox-action-btn delete-btn" onclick="deleteEnquiry('${enq.id}')">
+                            <span class="material-icons text-base">delete</span>
+                            <span class="text-[9px]">DELETE</span>
+                        </button>
+                    </div>
                 </div>
-                
-                <div class="mb-8 pr-20">
-                    <div class="text-primary text-[10px] tracking-[0.5em] uppercase mb-2">Subject: ${enq.package_interest || 'Website Enquiry'}</div>
-                    <h2 class="font-serif text-3xl mb-4">${enq.client_name}</h2>
-                    <div class="grid grid-cols-2 gap-y-4 gap-x-8">
-                        <div class="flex flex-col">
-                            <span class="text-[9px] opacity-40 uppercase tracking-widest mb-1">Email</span>
-                            <a href="mailto:${enq.email}" class="text-sm hover:text-primary transition-colors">${enq.email}</a>
+
+                <div class="flex-1 overflow-y-auto pr-4 mb-8 custom-scrollbar">
+                    <div class="enquiry-form-grid">
+                        <div class="enquiry-form-field">
+                            <label class="enquiry-form-label">Email Address</label>
+                            <div class="enquiry-form-value text-sm underline decoration-primary/20 underline-offset-4">${enq.email}</div>
                         </div>
-                        <div class="flex flex-col">
-                            <span class="text-[9px] opacity-40 uppercase tracking-widest mb-1">Phone</span>
-                            <a href="tel:${enq.phone}" class="text-sm hover:text-primary transition-colors">${enq.phone || 'N/A'}</a>
+                        <div class="enquiry-form-field">
+                            <label class="enquiry-form-label">Phone Number</label>
+                            <div class="enquiry-form-value text-sm">${enq.phone || 'Not Provided'}</div>
                         </div>
-                        <div class="flex flex-col">
-                            <span class="text-[9px] opacity-40 uppercase tracking-widest mb-1">Received On</span>
-                            <span class="text-sm">${timeStr}</span>
+                        <div class="enquiry-form-field">
+                            <label class="enquiry-form-label">Interest Package</label>
+                            <div class="enquiry-form-value text-primary font-bold uppercase tracking-widest text-[10px]">${reasonsStr}</div>
                         </div>
-                        <div class="flex flex-col">
-                            <span class="text-[9px] opacity-40 uppercase tracking-widest mb-1">Interests</span>
-                            <span class="text-sm text-primary uppercase text-[11px] font-medium tracking-wide">${reasonsStr}</span>
+                        <div class="enquiry-form-field">
+                            <label class="enquiry-form-label">Date Received</label>
+                            <div class="enquiry-form-value opacity-60 text-sm">${timeStr}</div>
+                        </div>
+                    </div>
+
+                    <div class="enquiry-message-area mt-4">
+                        <label class="enquiry-form-label mb-3 block opacity-50">Private Message</label>
+                        <div class="enquiry-form-value leading-relaxed whitespace-pre-wrap" style="min-height: 200px; align-items: flex-start; padding: 1.5rem 1.75rem;">
+                            ${enq.message}
                         </div>
                     </div>
                 </div>
-                
-                <div class="flex-1 bg-white/5 p-6 rounded-sm border border-white/5 overflow-y-auto">
-                    <div class="text-[9px] opacity-40 uppercase tracking-widest mb-4">Message Content:</div>
-                    <div class="text-sm opacity-80 leading-relaxed font-light whitespace-pre-wrap">${enq.message}</div>
-                </div>
-                
-                <div class="mt-8 pt-6 border-t border-outline flex gap-4">
-                    <a href="mailto:${enq.email}?subject=Inquiry Response - Sagar Doddamani" class="btn btn-primary px-8 py-3 rounded-none tracking-[0.2em] font-medium text-[11px] flex items-center gap-2">
-                        <span class="material-icons text-sm">reply</span> REPLY VIA EMAIL
+
+                <div class="mt-auto pt-8 border-t border-outline flex flex-wrap gap-4">
+                    <a href="mailto:${enq.email}?subject=Regarding your enquiry - Sagar Doddamani" class="reply-btn reply-btn-email flex-1 justify-center">
+                        <span class="material-icons">mail</span> SEND EMAIL
                     </a>
+                    
+                    ${enq.phone ? `
+                    <a href="https://wa.me/${enq.phone.replace(/[^0-9]/g, '')}?text=Hello ${encodeURIComponent(enq.client_name)}, this is Sagar Doddamani regarding your enquiry for ${encodeURIComponent(reasonsStr)}." 
+                       target="_blank" 
+                       class="reply-btn reply-btn-whatsapp flex-1 justify-center">
+                        <span class="material-icons">chat</span> WHATSAPP CHAT
+                    </a>
+                    ` : ''}
                 </div>
             </div>
         `;

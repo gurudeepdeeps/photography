@@ -177,37 +177,34 @@
         <a href="testimonials.html">Testimonials</a>
         <a href="contact.html">Contact</a>
     </div>
-    <!-- Page Loader -->
-    <div id="aboutLoader" class="loader-container">
-        <div class="loader-gold"></div>
-        <div class="loader-text">Loading the Story</div>
-    </div>
-
-    <main class="pt-32 opacity-0 transition-opacity duration-1000" id="aboutHeroMain">
+    <main class="pt-32" id="aboutHeroMain">
         <div class="px-12 max-w-7xl mx-auto">
             <!-- Narrative 01: Filmmaker -->
             <div class="bio-item">
-                <div class="bio-image box-shadow-premium">
-                    <img id="aboutPortrait" src="" alt="Portrait"
-                        class="w-full h-full object-cover">
+                <div class="bio-image box-shadow-premium relative bg-surface-lowest">
+                    <!-- Loading State -->
+                    <div id="aboutImageLoader" class="absolute inset-0 flex items-center justify-center opacity-40 uppercase tracking-widest text-[10px] z-10 transition-opacity duration-500">
+                        Loading Image...
+                    </div>
+                    <img id="aboutPortrait" src="" alt="Portrait" class="w-full h-full object-cover relative z-20 opacity-0 transition-opacity duration-1000" onload="this.style.opacity='1'; document.getElementById('aboutImageLoader').style.opacity='0';">
                 </div>
                 <div class="bio-content text-center">
                     <span class="text-primary text-[10px] uppercase tracking-[0.5em] mb-8 block font-medium">The Filmmaker</span>
                     <h2 class="brand-headline text-6xl lg:text-7xl mb-12 leading-[0.9] text-center w-full">
-                        <span id="aboutNameText"></span> <br>
-                        <span id="aboutSubNameText" class="text-primary italic font-light opacity-90 text-5xl lg:text-6xl block"></span>
+                        <span id="aboutNameText">...</span> <br>
+                        <span id="aboutSubNameText" class="text-primary italic font-light opacity-90 text-5xl lg:text-6xl block">...</span>
                     </h2>
                     <div id="aboutBioText" class="philosophy-text space-y-10 text-sm lg:text-base opacity-60 leading-relaxed font-light max-w-lg mx-auto text-center">
-                        <!-- Bio will load here -->
+                        <p>Loading narrative...</p>
                     </div>
                     <div class="flex flex-wrap justify-center gap-6 mt-12">
                         <div class="stat-btn">
-                            <span id="aboutStat1ValText" class="stat-number"></span>
-                            <span id="aboutStat1LabelText" class="stat-label"></span>
+                            <span id="aboutStat1ValText" class="stat-number">...</span>
+                            <span id="aboutStat1LabelText" class="stat-label">...</span>
                         </div>
                         <div class="stat-btn">
-                            <span id="aboutStat2ValText" class="stat-number"></span>
-                            <span id="aboutStat2LabelText" class="stat-label"></span>
+                            <span id="aboutStat2ValText" class="stat-number">...</span>
+                            <span id="aboutStat2LabelText" class="stat-label">...</span>
                         </div>
                     </div>
                 </div>
@@ -217,8 +214,8 @@
         <!-- Manifesto Section -->
         <section class="manifesto-section">
             <div class="max-w-4xl mx-auto">
-                <p id="aboutManifestoText" class="manifesto-quote font-serif italic">
-                    <!-- Manifesto will load here -->
+                <p id="aboutManifestoText" class="manifesto-quote font-serif italic opacity-60 text-lg">
+                    Loading manifesto...
                 </p>
             </div>
         </section>

@@ -441,20 +441,17 @@
             
             <section id="view-enquiries" class="admin-view" style="display: none;">
                 <div class="view-header flex justify-between items-end mb-8">
-                    <div>
-                        <h1 class="font-serif text-5xl mb-4">Enquiries Inbox</h1>
-                        <nav id="enquiriesFilterTabs" class="admin-tabs">
-                            <a href="#" class="tab-link active" data-filter="ALL">ALL MESSAGES</a>
-                            <a href="#" class="tab-link" data-filter="UNREAD">UNREAD</a>
-                            <a href="#" class="tab-link" data-filter="READ">READ</a>
-                            <a href="#" class="tab-link" data-filter="ARCHIVED">ARCHIVED</a>
-                        </nav>
-                    </div>
+                    <nav id="enquiriesFilterTabs" class="admin-tabs">
+                        <a href="#" class="tab-link active" data-filter="ALL">ALL MESSAGES</a>
+                        <a href="#" class="tab-link" data-filter="UNREAD">UNREAD</a>
+                        <a href="#" class="tab-link" data-filter="READ">READ</a>
+                        <a href="#" class="tab-link" data-filter="ARCHIVED">ARCHIVED</a>
+                    </nav>
                 </div>
                 
-                <div class="dashboard-split grid md:grid-cols-12 gap-0 border border-outline rounded-sm bg-surface">
+                <div class="dashboard-split grid md:grid-cols-12 gap-0 border border-outline rounded-sm bg-surface overflow-hidden">
                     <!-- Inbox List -->
-                    <div class="md:col-span-4 border-r border-outline h-[600px] overflow-y-auto" id="enquiriesList">
+                    <div class="md:col-span-4 border-r border-outline enquiriesList-pane custom-scrollbar" id="enquiriesList">
                         <!-- Dynamic Enquiries Load Here -->
                         <div class="p-8 text-center opacity-40 uppercase text-[10px] tracking-widest">
                             Loading Enquiries...
@@ -462,7 +459,7 @@
                     </div>
                     
                     <!-- Message Reading Pane -->
-                    <div class="md:col-span-8 p-8 h-[600px] flex flex-col relative" id="enquiryDetails">
+                    <div class="md:col-span-8 enquiryDetails-pane relative" id="enquiryDetails">
                         <div class="flex flex-col items-center justify-center h-full opacity-30 text-center">
                             <span class="material-icons text-5xl mb-4">mail_outline</span>
                             <p class="uppercase tracking-[0.3em] text-xs">Select an enquiry to read</p>
@@ -516,6 +513,17 @@
                             <option value="DRAFT">DRAFT</option>
                         </select>
                     </div>
+                </div>
+
+                <div class="form-group mb-6">
+                    <label class="flex items-center gap-4 cursor-pointer group">
+                        <div class="relative">
+                            <input type="checkbox" id="addFilmSelected" class="peer sr-only">
+                            <div class="w-10 h-5 bg-white/10 rounded-full peer peer-checked:bg-primary transition-all duration-300"></div>
+                            <div class="absolute top-1 left-1 w-3 h-3 bg-white rounded-full peer-checked:translate-x-5 transition-all duration-300"></div>
+                        </div>
+                        <span class="text-xs uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">Feature in Selected Works on Home Page (Max 4)</span>
+                    </label>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Cover Image <span id="currentCoverLabel" class="text-[9px] opacity-50 ml-2 hidden">(Keep empty to use existing)</span></label>

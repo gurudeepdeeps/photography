@@ -67,17 +67,6 @@
             }
         } catch (err) {
             console.error('[About] Handler error:', err);
-        } finally {
-            // Hide Loader
-            const loader = document.getElementById('aboutLoader');
-            const mainContent = document.getElementById('aboutHeroMain');
-            if (loader) {
-                loader.classList.add('fade-out');
-                setTimeout(() => loader.style.display = 'none', 800);
-            }
-            if (mainContent) {
-                mainContent.style.opacity = '1';
-            }
         }
     }
 

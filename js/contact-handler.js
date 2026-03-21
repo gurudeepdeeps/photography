@@ -2,7 +2,7 @@
 // contact-handler.js - Handles contact form submission to Supabase
 
 const SB_URL = "https://lmtjqneyfebhnzvgdwui.supabase.co";
-const SB_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdGpxbmV5ZmViaW56dmdkd3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNDkzNzEsImV4cCI6MjA4OTYyNTM3MX0._gemg7d30T3uFDXRJ2We9itBFncioGkQ93rQElqU2lM';
+const SB_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdGpxbmV5ZmViaG56dmdkd3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNDkzNzEsImV4cCI6MjA4OTYyNTM3MX0._gemg7d30T3uFDXRJ2We9itBFncioGkQ93rQElqU2lM';
 
 let sbClient;
 
@@ -14,13 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const form = document.getElementById('inquiry-form');
     const successMsg = document.getElementById('form-success-msg');
-    
+
     if (form) {
         form.onsubmit = async (e) => {
             e.preventDefault();
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerText;
-            
+
             try {
                 submitBtn.disabled = true;
                 submitBtn.innerText = "SENDING...";
@@ -30,11 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const email = form.querySelector('input[type="email"]').value.trim();
                 const phone = form.querySelector('input[type="tel"]').value.trim();
                 const message = form.querySelector('textarea').value.trim();
-                
+
                 // Collect Checkboxes (Reasons)
                 const reasonCheckboxes = form.querySelectorAll('input[name="reason"]:checked');
                 const reasons = Array.from(reasonCheckboxes).map(cb => cb.value);
-                
+
                 const inquiryData = {
                     client_name: fullName,
                     email: email,
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Save to Supabase
                 const { error } = await sbClient.from('enquiries').insert([inquiryData]);
-                
+
                 if (error) throw error;
 
                 // --- Resend Email Integration via Supabase Edge Function ---
