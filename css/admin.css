@@ -1095,6 +1095,16 @@
         justify-content: center;
         padding: 1rem !important;
     }
+
+    .reply-btn {
+        padding: 0.6rem 1.25rem !important;
+        font-size: 0.58rem !important;
+        gap: 0.45rem !important;
+    }
+
+    .reply-btn .material-icons {
+        font-size: 0.85rem !important;
+    }
 }
 
 .enquiry-message-area {
