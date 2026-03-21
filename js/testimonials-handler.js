@@ -92,10 +92,20 @@
         // 1. Handle Home Page (index.html)
         const homeContainer = document.getElementById('homeTestimonialsContainer');
         if (homeContainer && testimonials.length > 0) {
-            homeContainer.innerHTML = testimonials
-                .slice(0, 2)
-                .map(t => renderTestimonialCard(t))
-                .join('');
+            // Filter ONLY for selected home testimonials
+            let homeTestimonials = testimonials.filter(t => t.is_selected_home === true);
+            
+            if (homeTestimonials.length > 0) {
+                homeContainer.innerHTML = homeTestimonials
+                    .map(t => renderTestimonialCard(t))
+                    .join('');
+            } else {
+                // If nothing is ticked, don't show the "Loading" message anymore
+                homeContainer.innerHTML = '';
+                // Optional: Hide the section if no testimonials are featured
+                const section = homeContainer.closest('section');
+                if (section) section.style.display = 'none';
+            }
         }
 
         // 2. Handle Testimonials Page (testimonials.html)

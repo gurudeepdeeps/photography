@@ -610,7 +610,33 @@ ul {
     .md\:grid-cols-12 {
         grid-template-columns: repeat(12, minmax(0, 1fr));
     }
+}
 
+/* Responsive Overrides to Fix Horizontal Overflow */
+@media (max-width: 768px) {
+    .px-16 {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    .section-divider-gold {
+        max-width: 90% !important;
+        width: 90% !important;
+    }
+
+    .brand-headline {
+        font-size: 2.2rem !important;
+        letter-spacing: 0.1em !important;
+        white-space: normal !important;
+    }
+
+    .brand-tagline {
+        font-size: 0.6rem !important;
+        letter-spacing: 0.3em !important;
+    }
+}
+
+@media (min-width: 768px) {
     .md\:col-span-2 {
         grid-column: span 2 / span 2;
     }
@@ -673,8 +699,8 @@ ul {
 
 @media (max-width: 768px) {
     .px-12 {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
     }
 
     .py-24 {
@@ -696,8 +722,9 @@ ul {
     }
 
     .logo {
-        font-size: 1.2rem !important;
-        width: min-content;
+        font-size: 1rem !important;
+        width: auto !important;
+        white-space: nowrap !important;
     }
 }
 

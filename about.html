@@ -71,6 +71,24 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            main {
+                padding-top: 6rem !important;
+            }
+
+            .px-12 {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            }
+
+            .py-32 {
+                padding-top: 5rem !important;
+                padding-bottom: 5rem !important;
+            }
+
             .split-hero {
                 min-height: auto;
             }
@@ -78,18 +96,62 @@
             .bio-item,
             .bio-item:nth-child(even) {
                 flex-direction: column;
-                gap: 4rem;
-                margin-bottom: 4rem;
+                gap: 3rem;
+                margin-bottom: 6rem;
+                text-align: center;
             }
 
-            .bio-image,
+            .bio-image {
+                width: 100%;
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
             .bio-content {
                 width: 100%;
-                max-width: none;
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .bio-content h2 {
+                font-size: 3rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+
+            #aboutSubNameText {
+                font-size: 2rem !important;
+            }
+
+            .philosophy-text {
+                font-size: 0.9rem !important;
+                line-height: 1.6;
+                padding: 0 0.5rem;
             }
 
             .manifesto-section {
-                padding: 0 5% 4rem;
+                padding: 4rem 1.5rem;
+            }
+
+            .manifesto-quote {
+                font-size: 1.5rem !important;
+                line-height: 1.4;
+            }
+
+            section h2.text-5xl {
+                font-size: 2.2rem !important;
+                margin-bottom: 3rem !important;
+            }
+            
+            section h2.text-4xl {
+                font-size: 2rem !important;
+            }
+
+            .stat-btn {
+                padding: 1.5rem !important;
+            }
+
+            .stat-number {
+                font-size: 2.5rem !important;
             }
         }
 

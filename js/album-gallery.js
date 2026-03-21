@@ -126,9 +126,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         lightboxTitle.innerText = currentAlbumTitle;
         lightboxCounter.innerText = `${(currentPhotoIndex + 1).toString().padStart(2, '0')} / ${currentAlbumPhotos.length.toString().padStart(2, '0')}`;
         
-        // Add fade effect
-        lightboxImg.style.opacity = '0';
-        setTimeout(() => lightboxImg.style.opacity = '1', 50);
+        // Removed artificial delay/fade effect for truly instant switching
+        lightboxImg.style.opacity = '1';
+
+        // Preload next and previous images for instant future navigation
+        if (currentAlbumPhotos.length > 1) {
+            const nextIdx = (currentPhotoIndex + 1) % currentAlbumPhotos.length;
+            const prevIdx = (currentPhotoIndex - 1 + currentAlbumPhotos.length) % currentAlbumPhotos.length;
+            
+            new Image().src = currentAlbumPhotos[nextIdx].image_url;
+            new Image().src = currentAlbumPhotos[prevIdx].image_url;
+        }
     }
 
     function closeLightbox() {
@@ -166,6 +174,30 @@ document.addEventListener('DOMContentLoaded', async () => {
             closeLightbox();
         }
     });
+
+    // Touch Swipe Detection for Mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    lightbox.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightbox.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const threshold = 50; // min distance for swipe
+        if (touchEndX < touchStartX - threshold) {
+            // Swiped Left -> Show Next
+            nextPhoto();
+        } else if (touchEndX > touchStartX + threshold) {
+            // Swiped Right -> Show Prev
+            prevPhoto();
+        }
+    }
 
     // Initial load
     fetchPublicAlbums();

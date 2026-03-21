@@ -18,7 +18,7 @@
     <style>
         /* Replicating the Dribbble Testimonial Animation Design */
         :root {
-            --marquee-duration: 40s;
+            --marquee-duration: 50s; /* Slower default for ultra-wide/large screens */
         }
 
         body {
@@ -82,7 +82,9 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
-            height: 700px;
+            height: 80vh; /* Dynamic height for laptop/desktop view */
+            min-height: 600px;
+            max-height: 1000px;
             /* Fixed height for the scrolling area */
             mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
             -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
@@ -183,16 +185,24 @@
 
         /* Mobile Adjustments */
         @media (max-width: 1024px) {
-            .marquee-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
             .marquee-col:nth-child(3) {
                 display: none;
             }
         }
 
+        @media (max-width: 991px) {
+            :root {
+                --marquee-duration: 30s; /* Balanced speed for tablets */
+            }
+            .marquee-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
+            :root {
+                --marquee-duration: 22s; /* Faster speed for mobile */
+            }
             .marquee-container {
                 padding: 4rem 2rem;
                 border-radius: 40px;

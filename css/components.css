@@ -36,8 +36,8 @@ header.scrolled {
 
 @media (max-width: 480px) {
     .logo {
-        font-size: 1.1rem; /* Smaller font on very narrow screens */
-        letter-spacing: 0.05em;
+        font-size: 0.9rem; /* Smaller font on very narrow screens */
+        letter-spacing: 0.02em;
     }
 }
 
@@ -351,6 +351,32 @@ nav a:hover, nav a.active {
     }
 }
 
+@media (max-width: 768px) {
+    .bio-item {
+        grid-template-columns: 1fr;
+        gap: 6rem;
+        text-align: center; /* Centering for Tablet/Mobile */
+    }
+
+    .bio-stats-container {
+        justify-content: center;
+        gap: 1rem !important;
+    }
+
+    .stat-btn {
+        padding: 0.8rem 1.5rem !important;
+        min-width: 110px !important;
+    }
+
+    .stat-btn .stat-number {
+        font-size: 1.4rem !important;
+    }
+
+    .stat-btn .stat-label {
+        font-size: 8px !important;
+    }
+}
+
 .hero-actions {
     margin-top: 4.5rem;
     position: relative;
@@ -413,6 +439,13 @@ nav a:hover, nav a.active {
         padding: 0.4rem 1rem !important;
         top: 0 !important;
     }
+
+    .collection-card h4 {
+        padding: 0.6rem 1rem !important;
+        font-size: 0.8rem !important;
+        letter-spacing: 0.2em !important;
+        margin-bottom: 2rem !important;
+    }
 }
 
 /* Testimonial Card */
@@ -426,6 +459,7 @@ nav a:hover, nav a.active {
     flex-direction: column;
     gap: 2rem;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 100%;
 }
 
 .testimonial-card-dribbble:hover {
@@ -481,6 +515,30 @@ nav a:hover, nav a.active {
 .author-title-sub {
     font-size: 0.8rem;
     color: #777;
+}
+
+/* Mobile grid height and spacing adjustment */
+@media (max-width: 768px) {
+    .testimonial-card-dribbble {
+        padding: 1.25rem !important;
+        gap: 1rem !important;
+        border-radius: 16px !important;
+    }
+    .testimonial-card-dribbble .card-quote-icon {
+        font-size: 2rem !important;
+    }
+    .testimonial-card-dribbble .card-body-text {
+        font-size: 0.8rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 1rem !important;
+    }
+    .testimonial-card-dribbble .author-avatar {
+        width: 32px !important;
+        height: 32px !important;
+    }
+    .testimonial-card-dribbble .author-name-bold {
+        font-size: 0.75rem !important;
+    }
 }
 
 /* Targeted padding reduction for mobile packages section */
@@ -716,12 +774,10 @@ nav a:hover, nav a.active {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(1);
     transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .bio-item:hover .bio-image img {
-    filter: grayscale(0);
     transform: scale(1.05);
 }
 
@@ -745,5 +801,13 @@ nav a:hover, nav a.active {
     .bio-content {
         text-align: center;
         padding: 0 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bio-stats-container {
+        justify-content: center;
+        width: 100%;
     }
 }

@@ -680,7 +680,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="film-card fade-in">
                         <div class="drag-handle"><span class="material-icons opacity-30">comment</span></div>
                         <div class="film-info">
-                            <div class="text-[10px] text-primary tracking-widest uppercase mb-1">CLIENT</div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <div class="text-[10px] text-primary tracking-widest uppercase">CLIENT</div>
+                                ${item.is_selected_home ? '<span class="material-icons text-[12px] text-primary" title="Featured on Home Page">stars</span>' : ''}
+                            </div>
                             <h3 class="font-medium text-lg">${item.client_name}</h3>
                         </div>
                         <div class="film-couple" style="flex: 2.5;">
@@ -1157,6 +1160,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             setTimeout(() => {
                 addTestimonialModal.style.display = 'none';
                 if (newTestimonialForm) newTestimonialForm.reset();
+                const sel = document.getElementById('testiSelected');
+                if (sel) sel.checked = false;
             }, 300);
         }
     }
@@ -1186,6 +1191,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const client_name = document.getElementById('testiClient').value;
             const status = document.getElementById('testiStatus').value;
             const review_text = document.getElementById('testiText').value;
+            const is_selected_home = document.getElementById('testiSelected').checked;
 
             try {
                 saveBtn.disabled = true;
@@ -1193,7 +1199,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 statusMsg.style.display = 'block';
                 statusMsg.innerText = 'SAVING TO DATABASE...';
 
-                const testiData = { client_name, status, review_text };
+                const testiData = { client_name, status, review_text, is_selected_home };
 
                 let res;
                 if (editingTestimonialId) {
@@ -1230,8 +1236,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('saveTestiBtn').innerText = 'SAVE CHANGES';
         
         document.getElementById('testiClient').value = item.client_name;
-        document.getElementById('testiStatus').value = item.status;
+        document.getElementById('testiStatus').value = item.status || 'PUBLISHED';
         document.getElementById('testiText').value = item.review_text;
+        
+        const sel = document.getElementById('testiSelected');
+        if (sel) sel.checked = item.is_selected_home || false;
 
         const modal = document.getElementById('addTestimonialModal');
         if (modal) {

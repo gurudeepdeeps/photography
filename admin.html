@@ -630,6 +630,17 @@
                     <label class="form-label">Review Text *</label>
                     <textarea id="testiText" class="form-input min-h-[150px]" required placeholder="Write the testimonial here..."></textarea>
                 </div>
+
+                <div class="form-group mb-6 mt-4">
+                    <label class="flex items-center gap-4 cursor-pointer group">
+                        <div class="relative">
+                            <input type="checkbox" id="testiSelected" class="peer sr-only">
+                            <div class="w-10 h-5 bg-white/10 rounded-full peer peer-checked:bg-primary transition-all duration-300"></div>
+                            <div class="absolute top-1 left-1 w-3 h-3 bg-white rounded-full peer-checked:translate-x-5 transition-all duration-300"></div>
+                        </div>
+                        <span class="text-xs uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">Feature on Home Page Testimonials Section</span>
+                    </label>
+                </div>
                 
                 <div id="testimonialStatusMsg" class="text-xs text-primary tracking-widest uppercase mt-2 mb-2 text-center" style="display: none;"></div>
                 

@@ -68,7 +68,6 @@
                 const imgEl = document.getElementById('homeAboutImage');
                 if (imgEl && profile.portrait_url) {
                     imgEl.src = profile.portrait_url;
-                    imgEl.style.filter = 'grayscale(1)'; // Ensure styling is reapplied
                 }
                 
                 console.log('[Home About] UI Synced successfully.');
