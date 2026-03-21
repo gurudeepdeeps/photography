@@ -2056,7 +2056,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             link.click();
         }
     }
-});
+
     // --- Enquiries Manager Logic ---
     let enquiries = [];
     let activeEnquiryFilter = 'ALL';
@@ -2296,3 +2296,4 @@ document.addEventListener('DOMContentLoaded', async () => {
             fetchEnquiries();
         };
     });
+});

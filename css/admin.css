@@ -766,6 +766,16 @@
         display: none; /* Hide date on very narrow mobile to save space if needed - optional */
     }
 
+    #uploadFilmBtn {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.6rem !important;
+        letter-spacing: 0.1em !important;
+    }
+
+    #uploadFilmBtn .material-icons {
+        font-size: 0.8rem !important;
+    }
+
     .film-card {
         flex-direction: column;
         align-items: flex-start;
