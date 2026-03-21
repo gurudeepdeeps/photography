@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1. Initialize Supabase Client
     // Accessing credentials from admin.js effectively
     const SUPABASE_URL = 'https://lmtjqneyfebhnzvgdwui.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdGpxbmV5ZmViaG56dmdkd3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNDkzNzEsImV4cCI6MjA4OTYyNTM3MX0._gemg7d30T3uFDXRJ2We9itBFncioGkQ93rQElqU2lM'; 
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdGpxbmV5ZmViaG56dmdkd3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNDkzNzEsImV4cCI6MjA4OTYyNTM3MX0._gemg7d30T3uFDXRJ2We9itBFncioGkQ93rQElqU2lM';
     const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const albumGrid = document.getElementById('album-grid');
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .order('event_date', { ascending: false });
 
             if (error) throw error;
-            
+
             albums = data;
             renderAlbums(data);
         } catch (err) {
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function renderAlbums(albumList) {
         albumGrid.innerHTML = '';
-        
+
         if (albumList.length === 0) {
             albumGrid.innerHTML = `<p class="col-span-full text-center opacity-50 py-20">NO PUBLIC COLLECTIONS YET</p>`;
             return;
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             `;
             albumGrid.appendChild(albumEl);
-            
+
             // Trigger animation
             setTimeout(() => albumEl.classList.add('visible'), 50);
         });
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.openAlbum = async (albumId) => {
         const album = albums.find(a => a.id === albumId);
         currentAlbumTitle = album ? album.title : 'Album Gallery';
-        
+
         try {
             const { data, error } = await sbClient
                 .from('album_images')
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .order('order_index', { ascending: true });
 
             if (error) throw error;
-            
+
             if (data && data.length > 0) {
                 currentAlbumPhotos = data;
                 currentPhotoIndex = 0;
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function showLightbox() {
         if (!currentAlbumPhotos.length) return;
-        
+
         updateLightboxContent();
         lightbox.classList.add('active');
         lightbox.style.opacity = '1';
@@ -125,18 +125,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         lightboxImg.src = photo.image_url;
         lightboxTitle.innerText = currentAlbumTitle;
         lightboxCounter.innerText = `${(currentPhotoIndex + 1).toString().padStart(2, '0')} / ${currentAlbumPhotos.length.toString().padStart(2, '0')}`;
-        
+
         // Removed artificial delay/fade effect for truly instant switching
         lightboxImg.style.opacity = '1';
-
-        // Preload next and previous images for instant future navigation
-        if (currentAlbumPhotos.length > 1) {
-            const nextIdx = (currentPhotoIndex + 1) % currentAlbumPhotos.length;
-            const prevIdx = (currentPhotoIndex - 1 + currentAlbumPhotos.length) % currentAlbumPhotos.length;
-            
-            new Image().src = currentAlbumPhotos[nextIdx].image_url;
-            new Image().src = currentAlbumPhotos[prevIdx].image_url;
-        }
     }
 
     function closeLightbox() {
