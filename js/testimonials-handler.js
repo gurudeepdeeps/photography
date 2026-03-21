@@ -1,4 +1,4 @@
-(function() {
+(function () {
     /**
      * testimonials-handler.js - Public side logic for Testimonials
      * Fetches and displays testimonials from Supabase Database.
@@ -80,9 +80,9 @@
     const initTestimonials = async () => {
         if (window.testimonialsInitialized) return;
         window.testimonialsInitialized = true;
-        
+
         console.log('[Testimonials] Handler initializing (IIFE)...');
-        
+
         if (!sbClient && window.supabase) {
             sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         }
@@ -94,7 +94,7 @@
         if (homeContainer && testimonials.length > 0) {
             // Filter ONLY for selected home testimonials
             let homeTestimonials = testimonials.filter(t => t.is_selected_home === true);
-            
+
             if (homeTestimonials.length > 0) {
                 homeContainer.innerHTML = homeTestimonials
                     .map(t => renderTestimonialCard(t))
@@ -118,16 +118,22 @@
                 colBatches[index % colCount].push(item);
             });
 
+            // Find max batch size to balance others
+            const maxBatchSize = Math.max(...colBatches.map(b => b.length));
+            const targetCount = Math.max(10, maxBatchSize * 2);
+
             marqueeCols.forEach((col, i) => {
                 const batch = colBatches[i];
                 if (batch.length > 0) {
-                    const multiplier = batch.length < 3 ? 4 : 2;
+                    // Match the height by ensuring similar number of cards in all columns
+                    const multiplier = Math.max(2, Math.ceil(targetCount / batch.length));
                     let html = '';
-                    for(let m=0; m<multiplier; m++) {
+                    for (let m = 0; m < multiplier; m++) {
                         html += batch.map(t => renderMarqueeCard(t)).join('');
                     }
                     col.innerHTML = html;
                 } else {
+                    // Fallback for empty batch
                     col.innerHTML = testimonials.map(t => renderMarqueeCard(t)).join('');
                 }
             });
@@ -141,7 +147,7 @@
                 const btn = testimonialForm.querySelector('.btn-submit');
                 const formContent = document.getElementById('formContent');
                 const success = document.getElementById('successMessage');
-                
+
                 const client_name = document.getElementById('userName').value;
                 const review_text = document.getElementById('userStory').value;
 
@@ -162,7 +168,7 @@
 
                     formContent.style.opacity = '0';
                     formContent.style.transform = 'translateY(-20px)';
-                    
+
                     setTimeout(() => {
                         formContent.style.display = 'none';
                         success.style.display = 'block';
