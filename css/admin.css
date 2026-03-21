@@ -697,6 +697,9 @@
     
     .view-container {
         padding: 1.5rem !important;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
     }
 
     .view-header {
@@ -766,8 +769,19 @@
     .film-card {
         flex-direction: column;
         align-items: flex-start;
+        width: 100%;
+        overflow: hidden;
     }
-    
+
+    .film-info,
+    .film-couple,
+    .film-category,
+    .film-status,
+    .film-date {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
     .film-thumb {
         width: 100%;
         height: auto;
@@ -779,6 +793,11 @@
         margin-top: 1rem;
         width: 100%;
         justify-content: flex-start;
+    }
+    
+    .film-list {
+        overflow-x: hidden;
+        width: 100%;
     }
 }
 
