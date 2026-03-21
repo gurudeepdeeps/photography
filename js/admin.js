@@ -20,7 +20,7 @@ try {
 document.addEventListener('DOMContentLoaded', async () => {
 
     // Elements
-    const navLinks = document.querySelectorAll('.sidebar-nav .nav-link[data-target]');
+    const navLinks = document.querySelectorAll('[data-target]');
     const views = document.querySelectorAll('.admin-view');
     const topbarTitle = document.querySelector('.topbar-title');
     const searchBar = document.getElementById('topbarSearch');
@@ -111,6 +111,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .range(from, to);
 
             if (error) throw error;
+
+            // Update Stats
+            const { count: filmCount } = await sbClient.from('films').select('*', { count: 'exact', head: true });
+            const fStat = document.getElementById('statTotalFilms');
+            if(fStat && filmCount !== undefined) fStat.innerHTML = `${filmCount} <span class="material-icons text-primary text-sm">trending_up</span>`;
 
             if (reset && films.length === 0) {
                 listContainer.innerHTML = '<div class="opacity-50 text-center py-8 tracking-widest uppercase text-sm">NO FILMS IN DB. CLICK UPLOAD.</div>';
@@ -236,8 +241,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Call fetch on load
-    fetchFilms();
+    // Calls will be made at the end of DOMContentLoaded to avoid TDZ errors
 
     function getStoragePath(url) {
         if (!url || typeof url !== 'string') return null;
@@ -322,6 +326,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .range(from, to);
 
             if (error) throw error;
+
+            // Update Stats
+            const { count: albumCount } = await sbClient.from('albums').select('*', { count: 'exact', head: true });
+            const aStat = document.getElementById('statTotalAlbums');
+            if(aStat && albumCount !== undefined) aStat.innerHTML = `${albumCount} <span class="material-icons text-primary text-sm">photo_library</span>`;
 
             if (reset && albums.length === 0) {
                 listContainer.innerHTML = '<div class="opacity-50 text-center py-8 tracking-widest uppercase text-sm">NO ALBUMS IN DB. CLICK CREATE.</div>';
@@ -2033,10 +2042,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
+    // --- INITIAL FETCH CYCLE (Moved here to avoid Initialization errors) ---
+    fetchFilms();
+    fetchEnquiries();
+    fetchPackages();
+    fetchAlbums();
+
     // Handle hash on load (optional direct linking to views)
     if (window.location.hash) {
         const hashTarget = window.location.hash.substring(1);
-        const link = document.querySelector(`.nav-link[data-target="${hashTarget}"]`);
+        const link = document.querySelector(`[data-target="${hashTarget}"]`);
         if (link) {
             link.click();
         }
@@ -2063,8 +2078,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             const { data, error } = await query;
             if (error) throw error;
 
+            // Update Stats - Count UNREAD specifically for the dashboard stat
+            const { count: unreadCount } = await sbClient.from('enquiries').select('*', { count: 'exact', head: true }).eq('status', 'UNREAD');
+            const eStat = document.getElementById('statPendingInquiries');
+            if(eStat && unreadCount !== undefined) {
+                eStat.innerHTML = `${unreadCount} ${unreadCount > 0 ? '<span class="badge badge-error ml-2">URGENT</span>' : ''}`;
+            }
+
             enquiries = data || [];
             renderEnquiryList();
+            renderDashboardEnquiries();
         } catch (err) {
             console.error('[Enquiries] Fetch error:', err);
             list.innerHTML = '<div class="text-error p-8 text-center">FAILED TO LOAD</div>';
@@ -2101,6 +2124,36 @@ document.addEventListener('DOMContentLoaded', async () => {
         }).join('');
     }
 
+    function renderDashboardEnquiries() {
+        const list = document.getElementById('dashboardEnquiriesList');
+        if (!list) return;
+
+        // Take top 5 recent
+        const recent = enquiries.slice(0, 5);
+
+        if (recent.length === 0) {
+            list.innerHTML = '<tr><td colspan="4" class="text-center py-8 opacity-40 uppercase tracking-widest text-[10px]">No new enquiries</td></tr>';
+            return;
+        }
+
+        list.innerHTML = recent.map(enq => {
+            const date = new Date(enq.created_at);
+            const timeStr = date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+            
+            return `
+                <tr>
+                    <td>
+                        <div class="font-medium text-white">${enq.client_name}</div>
+                        <div class="text-[10px] text-primary tracking-widest uppercase mt-1 opacity-80">${enq.category || 'INQUIRY'}</div>
+                    </td>
+                    <td class="text-sm opacity-60">${timeStr}</td>
+                    <td class="text-xs uppercase tracking-widest">${enq.package_interest || 'N/A'}</td>
+                    <td><span class="badge badge-outline" style="font-size: 9px; padding: 0.2rem 0.5rem;">${enq.status}</span></td>
+                </tr>
+            `;
+        }).join('');
+    }
+
     window.showEnquiryDetails = async (id) => {
         const enq = enquiries.find(e => e.id === id);
         if (!enq) return;
@@ -2128,22 +2181,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         const reasonsStr = Array.isArray(enq.reasons) ? enq.reasons.join(', ') : (enq.package_interest || 'General Inquiry');
 
         details.innerHTML = `
-            <div class="fade-in animate-slide-up h-full flex flex-col relative" style="padding: 2.5rem;">
+            <div class="fade-in animate-slide-up h-full flex flex-col relative enquiry-details-inner p-12 md:p-16">
                 <!-- New Flex Header for Actions -->
                 <div class="flex justify-between items-start mb-10 w-full border-b border-outline pb-8">
                     <div class="flex flex-col">
                         <div class="text-primary text-[10px] tracking-[0.6em] uppercase mb-2 opacity-70">Enquiry Received</div>
-                        <h2 class="font-serif text-4xl">${enq.client_name}</h2>
+                        <h2 class="font-serif text-2xl">${enq.client_name}</h2>
                     </div>
                     
                     <div class="flex gap-3 mt-2">
                         <button class="inbox-action-btn" onclick="updateEnquiryStatus('${enq.id}', '${enq.status === 'ARCHIVED' ? 'READ' : 'ARCHIVED'}')">
-                            <span class="material-icons text-base">${enq.status === 'ARCHIVED' ? 'unarchive' : 'archive'}</span>
-                            <span class="text-[9px]">${enq.status === 'ARCHIVED' ? 'UNARCHIVE' : 'ARCHIVE'}</span>
+                            <span class="material-icons text-sm">${enq.status === 'ARCHIVED' ? 'unarchive' : 'archive'}</span>
+                            <span class="text-[8px]">${enq.status === 'ARCHIVED' ? 'UNARCHIVE' : 'ARCHIVE'}</span>
                         </button>
                         <button class="inbox-action-btn delete-btn" onclick="deleteEnquiry('${enq.id}')">
-                            <span class="material-icons text-base">delete</span>
-                            <span class="text-[9px]">DELETE</span>
+                            <span class="material-icons text-sm">delete</span>
+                            <span class="text-[8px]">DELETE</span>
                         </button>
                     </div>
                 </div>

@@ -133,28 +133,24 @@
                 <div class="stats-grid mb-16">
                     <div class="stat-card">
                         <div class="stat-label">TOTAL FILMS</div>
-                        <div class="stat-value">42 <span class="material-icons text-primary text-sm">trending_up</span></div>
+                        <div id="statTotalFilms" class="stat-value">-- <span class="material-icons text-primary text-sm">trending_up</span></div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">CLIENT ALBUMS</div>
-                        <div class="stat-value">128 <span class="material-icons text-primary text-sm">photo_library</span></div>
+                        <div id="statTotalAlbums" class="stat-value">-- <span class="material-icons text-primary text-sm">photo_library</span></div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">PENDING INQUIRIES</div>
-                        <div class="stat-value">12 <span class="badge badge-error ml-2">URGENT</span></div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">AVG. RATING</div>
-                        <div class="stat-value">4.9 <span class="text-xs opacity-50 ml-1">/ 5.0</span></div>
+                        <div id="statPendingInquiries" class="stat-value">-- <span class="badge badge-error ml-2">URGENT</span></div>
                     </div>
                 </div>
 
                 <!-- Split Content -->
                 <div class="dashboard-split grid md:grid-cols-12 gap-12">
-                    <div class="md:col-span-8">
+                    <div class="md:col-span-12">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="font-serif text-2xl">Recent Inquiries</h3>
-                            <a href="#inquiries" class="text-primary text-xs tracking-widest uppercase hover:underline">VIEW ALL LEADS</a>
+                            <a href="#" data-target="enquiries" class="text-primary text-xs tracking-widest uppercase hover:underline">VIEW ALL LEADS</a>
                         </div>
                         <div class="table-container">
                             <table class="admin-table">
@@ -166,63 +162,17 @@
                                         <th>STATUS</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="dashboardEnquiriesList">
                                     <tr>
-                                        <td>
-                                            <div class="font-medium text-white">Aditi & Rohan</div>
-                                            <div class="text-xs opacity-50 tracking-widest uppercase mt-1">WEDDING FILM</div>
+                                        <td colspan="4">
+                                            <div class="py-16 text-center">
+                                                <div class="inline-block animate-spin border-t-2 border-primary rounded-full w-4 h-4 mb-3"></div>
+                                                <div class="opacity-40 uppercase text-[9px] tracking-[0.4em]">Loading Recent Inquiries...</div>
+                                            </div>
                                         </td>
-                                        <td>Nov 24, 2024</td>
-                                        <td>Cinematic Elite</td>
-                                        <td><span class="badge badge-outline">UNREAD</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="font-medium text-white">Vikram Sethi</div>
-                                            <div class="text-xs opacity-50 tracking-widest uppercase mt-1">COMMERCIAL</div>
-                                        </td>
-                                        <td>Dec 12, 2024</td>
-                                        <td>Bespoke Brand</td>
-                                        <td><span class="badge badge-dark">READ</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="font-medium text-white">Meera Kapoor</div>
-                                            <div class="text-xs opacity-50 tracking-widest uppercase mt-1">PRE-WEDDING</div>
-                                        </td>
-                                        <td>Oct 15, 2024</td>
-                                        <td>The Storyteller</td>
-                                        <td><span class="badge badge-dark">RESPONDED</span></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-
-                    <div class="md:col-span-4">
-                        <h3 class="font-serif text-2xl mb-6">Quick Actions</h3>
-                        <div class="quick-actions-list flex flex-col gap-4">
-                            <div class="action-card">
-                                <span class="material-icons text-primary">video_call</span>
-                                <div class="action-text">
-                                    <h4 class="font-medium tracking-widest text-sm mb-1 uppercase">Upload New Film</h4>
-                                    <p class="text-xs opacity-50">Add a new cinematic project to your portfolio.</p>
-                                </div>
-                            </div>
-                            <div class="action-card">
-                                <span class="material-icons text-primary">create_new_folder</span>
-                                <div class="action-text">
-                                    <h4 class="font-medium tracking-widest text-sm mb-1 uppercase">Create Client Album</h4>
-                                    <p class="text-xs opacity-50">Set up a private viewing gallery for clients.</p>
-                                </div>
-                            </div>
-                            <div class="action-card">
-                                <span class="material-icons text-primary">rate_review</span>
-                                <div class="action-text">
-                                    <h4 class="font-medium tracking-widest text-sm mb-1 uppercase">Add Testimonial</h4>
-                                    <p class="text-xs opacity-50">Feature a new client review on the website.</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -232,7 +182,7 @@
             <section id="view-films" class="admin-view" style="display: none;">
                 <div class="view-header flex justify-between items-end mb-8">
                     <div>
-                        <h1 class="font-serif text-5xl mb-4">The Cinematic Frame</h1>
+                        <h1 class="view-title">The Cinematic Frame</h1>
                         <nav class="admin-tabs" id="filmsFilterTabs">
                             <a href="#" class="tab-link active" data-filter="ALL">ALL FILMS</a>
                             <a href="#" class="tab-link" data-filter="DRAFT">DRAFTS</a>
@@ -268,7 +218,7 @@
             <section id="view-albums" class="admin-view" style="display: none;">
                 <div class="view-header flex justify-between items-end mb-8">
                     <div>
-                        <h1 class="font-serif text-5xl mb-4">Client Albums</h1>
+                        <h1 class="view-title">Client Albums</h1>
                         <nav class="admin-tabs" id="albumsFilterTabs">
                             <a href="#" class="tab-link active" data-filter="ALL">ALL ALBUMS</a>
                             <a href="#" class="tab-link" data-filter="WEDDING">WEDDINGS</a>
@@ -303,7 +253,7 @@
             <section id="view-packages" class="admin-view" style="display: none;">
                 <div class="view-header flex justify-between items-end mb-8">
                     <div>
-                        <h1 class="font-serif text-5xl mb-4">Packages Manager</h1>
+                        <h1 class="view-title">Packages Manager</h1>
                         <nav class="admin-tabs" id="packagesFilterTabs">
                             <a href="#" class="tab-link active" data-filter="ALL">PACKAGES</a>
                         </nav>
@@ -326,7 +276,7 @@
             <section id="view-about" class="admin-view" style="display: none;">
                 <div class="view-header flex justify-between items-end mb-8">
                     <div>
-                        <h1 class="font-serif text-5xl mb-4">About Page Manager</h1>
+                        <h1 class="view-title">About Page Manager</h1>
                         <nav id="aboutTabs" class="admin-tabs">
                             <a href="#" class="tab-link active" data-target="about-profile">PROFILE & STORY</a>
                             <a href="#" class="tab-link" data-target="about-values">CORE VALUES</a>
@@ -424,7 +374,7 @@
             <section id="view-testimonials" class="admin-view" style="display: none;">
                 <div class="view-header flex justify-between items-end mb-8">
                     <div>
-                        <h1 class="font-serif text-5xl mb-4">Testimonials Manager</h1>
+                        <h1 class="view-title">Testimonials Manager</h1>
                         <nav id="testimonialsFilterTabs" class="admin-tabs">
                             <a href="#" class="tab-link active" data-filter="PUBLISHED">PUBLISHED</a>
                             <a href="#" class="tab-link" data-filter="PENDING REVIEW">PENDING REVIEW</a>
@@ -449,9 +399,9 @@
                     </nav>
                 </div>
                 
-                <div class="dashboard-split grid md:grid-cols-12 gap-0 border border-outline rounded-sm bg-surface overflow-hidden">
+                <div class="dashboard-split inbox-container gap-0 border border-outline rounded-sm bg-surface overflow-hidden" id="enquiriesLayout">
                     <!-- Inbox List -->
-                    <div class="md:col-span-4 border-r border-outline enquiriesList-pane custom-scrollbar" id="enquiriesList">
+                    <div class="enquiriesList-pane custom-scrollbar" id="enquiriesList">
                         <!-- Dynamic Enquiries Load Here -->
                         <div class="p-8 text-center opacity-40 uppercase text-[10px] tracking-widest">
                             Loading Enquiries...
@@ -459,7 +409,7 @@
                     </div>
                     
                     <!-- Message Reading Pane -->
-                    <div class="md:col-span-8 enquiryDetails-pane relative" id="enquiryDetails">
+                    <div class="enquiryDetails-pane relative" id="enquiryDetails">
                         <div class="flex flex-col items-center justify-center h-full opacity-30 text-center">
                             <span class="material-icons text-5xl mb-4">mail_outline</span>
                             <p class="uppercase tracking-[0.3em] text-xs">Select an enquiry to read</p>
