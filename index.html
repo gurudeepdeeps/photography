@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sagar Doddamani | Wedding Cinematography</title>
+    <link rel="icon" type="image/png" href="assets/sagar_doddamani_logo.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -293,36 +294,9 @@
     <!-- Testimonial Section -->
     <section class="py-32 px-12 bg-surface-lowest">
         <h2 class="text-5xl text-center mb-32 font-normal fade-in">Testimonials</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto">
-            <!-- Testimonial 1 -->
-            <div class="testimonial-card-dribbble fade-in text-left">
-                <div class="card-quote-icon">"</div>
-                <div class="card-body-text">
-                    "Sagar didn't just film our wedding; he captured the breath between the moments. Reliving our dream feels like it never ended."
-                </div>
-                <div class="card-footer">
-                    <div class="author-avatar">I&M</div>
-                    <div class="author-info flex flex-col">
-                        <span class="author-name-bold">Isabella & Marc</span>
-                        <span class="author-title-sub">Amalfi Coast</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Testimonial 2 -->
-            <div class="testimonial-card-dribbble fade-in text-left">
-                <div class="card-quote-icon">"</div>
-                <div class="card-body-text">
-                    "The absolute pinnacle of luxury storytelling. He found the profound in the simple, and the poetic in the grand."
-                </div>
-                <div class="card-footer">
-                    <div class="author-avatar">S&J</div>
-                    <div class="author-info flex flex-col">
-                        <span class="author-name-bold">Sophia & James</span>
-                        <span class="author-title-sub">Florence</span>
-                    </div>
-                </div>
-            </div>
+        <div id="homeTestimonialsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto">
+            <!-- Dynamic Testimonials will be injected here from Supabase -->
+            <div class="col-span-full py-12 text-center opacity-40 uppercase tracking-widest text-xs">Loading Testimonials...</div>
         </div>
 
         <!-- View All Testimonials CTA -->
@@ -337,62 +311,12 @@
     <div class="section-divider-gold fade-in"></div>
 
     <!-- Packages Section -->
-    <section class="pt-12 pb-24 px-12 max-w-7xl mx-auto pkg-section">
-        <h2 class="text-5xl text-center mb-16 font-normal fade-in">Packages</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 packages-row-mobile">
-            <!-- Card 1 -->
-            <div class="collection-card fade-in">
-                <h4>Silver</h4>
-                <p class="description">For the couples seeking a focused, elegant preservation of their day's core
-                    heartbeats. A minimalist approach with maximum emotional impact.</p>
-                <ul class="features">
-                    <li>8 Hours Coverage</li>
-                    <li>Primary Cinematographer</li>
-                    <li>4K Master Narrative</li>
-                    <li class="package-price">₹40,000</li>
-                </ul>
-                <a href="https://wa.me/916363770057?text=Hi%20Sagar!%20I'm%20interested%20in%20the%20Silver%20package.%20Please%20share%20more%20details."
-                    target="_blank" rel="noopener"
-                    class="btn btn-outline px-16 py-5 inline-flex items-center gap-4 group">
-                    Enquire on WhatsApp
-                </a>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="collection-card featured fade-in delay-1">
-                <div class="featured-badge">Most Popular</div>
-                <h4>Platinum</h4>
-                <p class="description">Our signature cinematic journey. An expansive documentation that captures the
-                    profound atmosphere and unspoken connection of your celebration.</p>
-                <ul class="features">
-                    <li>Full Day Coverage</li>
-                    <li>Two Lead Artists</li>
-                    <li>Drone Perspective</li>
-                    <li class="package-price">₹1,20,000</li>
-                </ul>
-                <a href="https://wa.me/916363770057?text=Hi%20Sagar!%20I'm%20interested%20in%20the%20Platinum%20package.%20Please%20share%20more%20details."
-                    target="_blank" rel="noopener"
-                    class="btn btn-outline px-16 py-5 inline-flex items-center gap-4 group">
-                    Enquire on WhatsApp
-                </a>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="collection-card fade-in delay-2">
-                <h4>Gold</h4>
-                <p class="description">The ultimate archival collection. Multi-day documentation and a bespoke
-                    hand-crafted legacy for those who desire every nuance preserved.</p>
-                <ul class="features">
-                    <li>Multi-Day Coverage</li>
-                    <li>Full Artistic Team</li>
-                    <li>Italian Leather Album</li>
-                    <li class="package-price">₹60,000</li>
-                </ul>
-                <a href="https://wa.me/916363770057?text=Hi%20Sagar!%20I'm%20interested%20in%20the%20Gold%20package.%20Please%20share%20more%20details."
-                    target="_blank" rel="noopener"
-                    class="btn btn-outline px-16 py-5 inline-flex items-center gap-4 group">
-                    Enquire on WhatsApp
-                </a>
+    <section id="packages" class="py-32 px-12 bg-surface">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl md:text-6xl mb-24 font-serif italic text-center fade-in">Packages</h2>
+            <div id="packagesContainer" class="grid grid-cols-1 md:grid-cols-3 gap-8 packages-row-mobile">
+                <!-- Dynamic Packages Will Load Here -->
+                <div class="col-span-full text-center opacity-30 uppercase tracking-widest text-[10px] py-24">Calculating Collections...</div>
             </div>
         </div>
     </section>
@@ -474,6 +398,9 @@
                         <li><a href="contact.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Contact</a>
                         </li>
+                        <li><a href="login.html"
+                                class="text-sm uppercase tracking-widest transition-colors">Admin Login</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -484,6 +411,9 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/testimonials-handler.js"></script>
+    <script src="js/packages-handler.js"></script>
     <script src="js/animations.js"></script>
     <script>
         // Header scroll effect

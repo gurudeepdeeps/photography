@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Films | Sagar Doddamani</title>
+    <link rel="icon" type="image/png" href="assets/sagar_doddamani_logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -112,142 +113,20 @@
         </div>
 
         <section class="px-12 py-24 max-w-7xl mx-auto">
+            <!-- Loading Indicator -->
+            <div id="loader-container" class="loader-container active">
+                <span class="loader"></span>
+                <span class="loader-text">Loading Cinematic Stories</span>
+            </div>
+
             <div class="video-grid grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24" id="video-grid">
-                <!-- Video 1 -->
-                <div class="video-item fade-in">
-                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
-                        <video src="https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" 
-                               controls class="w-full h-full object-cover"></video>
-                    </div>
-                    <div class="mt-8">
-                        <h3 class="text-2xl italic font-serif">Aria & Julian</h3>
-                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Lake Como, Italy • MMXXIV</p>
-                    </div>
-                </div>
-
-                <!-- Video 2 -->
-                <div class="video-item fade-in">
-                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
-                        <video src="https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" 
-                               controls class="w-full h-full object-cover"></video>
-                    </div>
-                    <div class="mt-8">
-                        <h3 class="text-2xl italic font-serif">The Minimalist</h3>
-                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Paris, France • MMXXIII</p>
-                    </div>
-                </div>
-
-                 <!-- Video 3 -->
-                 <div class="video-item fade-in">
-                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
-                        <video src="https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" 
-                               controls class="w-full h-full object-cover"></video>
-                    </div>
-                    <div class="mt-8">
-                        <h3 class="text-2xl italic font-serif">Ethereal Grace</h3>
-                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Udaipur, India • MMXXIV</p>
-                    </div>
-                </div>
-
-                <!-- Video 4 -->
-                <div class="video-item fade-in">
-                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
-                        <video src="https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" 
-                               controls class="w-full h-full object-cover"></video>
-                    </div>
-                    <div class="mt-8">
-                        <h3 class="text-2xl italic font-serif">Desert Bloom</h3>
-                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Dubai, UAE • MMXXIV</p>
-                    </div>
-                </div>
-
-                <!-- Video 5 -->
-                <div class="video-item fade-in">
-                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
-                        <video src="https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" 
-                               controls class="w-full h-full object-cover"></video>
-                    </div>
-                    <div class="mt-8">
-                        <h3 class="text-2xl italic font-serif">Wild Hearts</h3>
-                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Reykjavik, Iceland • MMXXIII</p>
-                    </div>
-                </div>
-
-                <!-- Video 6 -->
-                <div class="video-item fade-in">
-                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
-                        <video src="https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" 
-                               controls class="w-full h-full object-cover"></video>
-                    </div>
-                    <div class="mt-8">
-                        <h3 class="text-2xl italic font-serif">Sunset Symphony</h3>
-                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">Santorini, Greece • MMXXIV</p>
-                    </div>
-                </div>
-
-                <!-- Video 7 -->
-                <div class="video-item fade-in">
-                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
-                        <video src="https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" 
-                               controls class="w-full h-full object-cover"></video>
-                    </div>
-                    <div class="mt-8">
-                        <h3 class="text-2xl italic font-serif">Midnight Muse</h3>
-                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">New York, USA • MMXXIV</p>
-                    </div>
-                </div>
-
-                <!-- Video 8 -->
-                <div class="video-item fade-in">
-                    <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
-                        <video src="https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" 
-                               controls class="w-full h-full object-cover"></video>
-                    </div>
-                    <div class="mt-8">
-                        <h3 class="text-2xl italic font-serif">Floral Reverie</h3>
-                        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">London, UK • MMXXIII</p>
-                    </div>
-                </div>
+                <!-- Videos populated by Supabase via JS -->
             </div>
 
             <div class="flex justify-center mt-32">
-                <button id="load-more-btn" class="btn btn-outline py-5 px-16 tracking-vogue uppercase text-xs">Load More Films</button>
+                <button id="load-more-btn" class="btn btn-outline py-5 px-16 tracking-vogue uppercase text-xs" style="display: none;">Load More Films</button>
             </div>
         </section>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const loadMoreBtn = document.getElementById('load-more-btn');
-                const grid = document.getElementById('video-grid');
-                
-                const moreVideos = [
-                    { title: "Azure Dreams", location: "Maldives • MMXXIV", src: "https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" },
-                    { title: "Golden Hour", location: "Tuscany, Italy • MMXXIII", src: "https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" },
-                    { title: "Urban Elegance", location: "Tokyo, Japan • MMXXIV", src: "https://player.vimeo.com/external/370331493.sd.mp4?s=330c9462efb6051770e0655d8df28cb39d4b0086&profile_id=139&oauth2_token_id=57447761" },
-                    { title: "Mountain Peak", location: "Swiss Alps • MMXXIV", src: "https://player.vimeo.com/external/406343513.sd.mp4?s=3b490f23f380be5e63e1201529a67e9f36f6d4d1&profile_id=139&oauth2_token_id=57447761" }
-                ];
-
-                loadMoreBtn.addEventListener('click', () => {
-                    moreVideos.forEach(v => {
-                        const item = document.createElement('div');
-                        item.className = 'video-item fade-in';
-                        item.innerHTML = `
-                            <div class="video-wrapper aspect-video bg-surface-container overflow-hidden relative">
-                                <video src="${v.src}" controls class="w-full h-full object-cover"></video>
-                            </div>
-                            <div class="mt-8">
-                                <h3 class="text-2xl italic font-serif">${v.title}</h3>
-                                <p class="text-[10px] tracking-[0.3em] uppercase opacity-40 mt-3">${v.location}</p>
-                            </div>
-                        `;
-                        grid.appendChild(item);
-                        // Trigger animation if observer is running or just manual
-                        setTimeout(() => item.classList.add('visible'), 50);
-                    });
-                    loadMoreBtn.style.display = 'none'; // Hide button after loading all
-                });
-            });
-        </script>
     </main>
 
     <footer class="py-24 px-12 bg-surface-lowest border-t border-outline">
@@ -323,6 +202,9 @@
                         <li><a href="contact.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Contact</a>
                         </li>
+                        <li><a href="login.html"
+                                class="text-sm uppercase tracking-widest transition-colors">Admin Login</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -332,7 +214,9 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/animations.js"></script>
+    <script src="js/films.js"></script>
 </body>
 
 </html>

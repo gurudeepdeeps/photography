@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | Sagar Doddamani</title>
+    <link rel="icon" type="image/png" href="assets/sagar_doddamani_logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -91,6 +92,56 @@
                 padding: 0 5% 4rem;
             }
         }
+
+        /* Loading Indicator */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-background);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .loader-container.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-gold {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--color-primary-low);
+            border-top: 1px solid var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            margin-top: 2rem;
+            font-size: 10px;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            opacity: 0.6;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
     </style>
 </head>
 
@@ -126,35 +177,37 @@
         <a href="testimonials.html">Testimonials</a>
         <a href="contact.html">Contact</a>
     </div>
-    <main class="pt-32">
+    <!-- Page Loader -->
+    <div id="aboutLoader" class="loader-container">
+        <div class="loader-gold"></div>
+        <div class="loader-text">Loading the Story</div>
+    </div>
+
+    <main class="pt-32 opacity-0 transition-opacity duration-1000" id="aboutHeroMain">
         <div class="px-12 max-w-7xl mx-auto">
             <!-- Narrative 01: Filmmaker -->
-            <div class="bio-item fade-in">
+            <div class="bio-item">
                 <div class="bio-image box-shadow-premium">
-                    <img src="assets/sagar_portrait.png" alt="Sagar Doddamani Portrait"
+                    <img id="aboutPortrait" src="" alt="Portrait"
                         class="w-full h-full object-cover">
                 </div>
                 <div class="bio-content text-center">
                     <span class="text-primary text-[10px] uppercase tracking-[0.5em] mb-8 block font-medium">The Filmmaker</span>
                     <h2 class="brand-headline text-6xl lg:text-7xl mb-12 leading-[0.9] text-center w-full">
-                        Sagar <br>
-                        <span class="text-primary italic font-light opacity-90 text-5xl lg:text-6xl block">Doddamani</span>
+                        <span id="aboutNameText"></span> <br>
+                        <span id="aboutSubNameText" class="text-primary italic font-light opacity-90 text-5xl lg:text-6xl block"></span>
                     </h2>
-                    <div class="philosophy-text space-y-10 text-sm lg:text-base opacity-60 leading-relaxed font-light max-w-lg mx-auto text-center">
-                        <p>
-                            Every film is hand-crafted in our studio, ensuring that the final narrative is an honest
-                            reflection of your connection. We work with a limited number of couples each year to maintain
-                            this level of artisanal focus.
-                        </p>
+                    <div id="aboutBioText" class="philosophy-text space-y-10 text-sm lg:text-base opacity-60 leading-relaxed font-light max-w-lg mx-auto text-center">
+                        <!-- Bio will load here -->
                     </div>
                     <div class="flex flex-wrap justify-center gap-6 mt-12">
                         <div class="stat-btn">
-                            <span class="stat-number">10+</span>
-                            <span class="stat-label">Years</span>
+                            <span id="aboutStat1ValText" class="stat-number"></span>
+                            <span id="aboutStat1LabelText" class="stat-label"></span>
                         </div>
                         <div class="stat-btn">
-                            <span class="stat-number">500+</span>
-                            <span class="stat-label">Projects</span>
+                            <span id="aboutStat2ValText" class="stat-number"></span>
+                            <span id="aboutStat2LabelText" class="stat-label"></span>
                         </div>
                     </div>
                 </div>
@@ -164,8 +217,8 @@
         <!-- Manifesto Section -->
         <section class="manifesto-section">
             <div class="max-w-4xl mx-auto">
-                <p class="manifesto-quote font-serif italic fade-in">
-                    "Art is not what I see. <br> It is what I make others <span class="text-primary">feel.</span>"
+                <p id="aboutManifestoText" class="manifesto-quote font-serif italic">
+                    <!-- Manifesto will load here -->
                 </p>
             </div>
         </section>
@@ -174,23 +227,8 @@
         <section class="py-32 px-12 bg-surface-lowest">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-5xl text-center mb-24 font-normal fade-in">Foundational Values</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="collection-card fade-in">
-                        <h4>Artistry</h4>
-                        <p class="description">We lean into the timeless, using light and shadow to create a visual
-                            legacy that transcends current trends.</p>
-                    </div>
-                    <div class="collection-card featured fade-in delay-1">
-                        <div class="featured-badge">Core Intent</div>
-                        <h4>Creativity</h4>
-                        <p class="description">Capturing raw emotions without staging. We believe the most beautiful
-                            moments are the ones you didn't know happened.</p>
-                    </div>
-                    <div class="collection-card fade-in delay-2">
-                        <h4>Impact</h4>
-                        <p class="description">Creating a portal back to the soul of your celebration, ensuring your
-                            story is felt by generations to come.</p>
-                    </div>
+                <div id="aboutValuesGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Dynamic Values Will Load Here -->
                 </div>
             </div>
         </section>
@@ -276,6 +314,9 @@
                         <li><a href="contact.html"
                                 class="text-sm uppercase tracking-widest transition-colors">Contact</a>
                         </li>
+                        <li><a href="login.html"
+                                class="text-sm uppercase tracking-widest transition-colors">Admin Login</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -285,6 +326,8 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/about-handler.js"></script>
     <script src="js/animations.js"></script>
 </body>
 
