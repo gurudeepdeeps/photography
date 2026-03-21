@@ -2042,7 +2042,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // --- INITIAL FETCH CYCLE (Moved here to avoid Initialization errors) ---
+    // --- Enquiries variables (must be before fetch calls) ---
+    let enquiries = [];
+    let activeEnquiryFilter = 'ALL';
+
+    // --- INITIAL FETCH CYCLE ---
     fetchFilms();
     fetchEnquiries();
     fetchPackages();
@@ -2058,8 +2062,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // --- Enquiries Manager Logic ---
-    let enquiries = [];
-    let activeEnquiryFilter = 'ALL';
 
     async function fetchEnquiries() {
         if (!sbClient) return;
