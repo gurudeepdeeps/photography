@@ -776,6 +776,40 @@
         font-size: 0.8rem !important;
     }
 
+    #addPackageBtn,
+    #createAlbumBtn,
+    #addTestimonialBtn,
+    #addAboutValueBtn {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.6rem !important;
+        letter-spacing: 0.1em !important;
+    }
+
+    #addPackageBtn .material-icons,
+    #createAlbumBtn .material-icons,
+    #addTestimonialBtn .material-icons,
+    #addAboutValueBtn .material-icons {
+        font-size: 0.8rem !important;
+    }
+
+    .view-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem;
+    }
+
+    .drag-handle {
+        padding: 0.25rem !important;
+    }
+
+    .drag-handle .material-icons {
+        font-size: 1rem !important;
+    }
+
+    .film-couple {
+        flex: unset !important;
+    }
+
     .film-card {
         flex-direction: column;
         align-items: flex-start;
