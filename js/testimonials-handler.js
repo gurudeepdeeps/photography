@@ -4,12 +4,11 @@
      * Fetches and displays testimonials from Supabase Database.
      */
 
-    const SUPABASE_URL = 'https://lmtjqneyfebhnzvgdwui.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdGpxbmV5ZmViaG56dmdkd3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNDkzNzEsImV4cCI6MjA4OTYyNTM3MX0._gemg7d30T3uFDXRJ2We9itBFncioGkQ93rQElqU2lM';
+    let sbClient = window.supabaseClient;
 
-    let sbClient = null;
-
-    if (window.supabase) {
+    if (!sbClient && window.supabase) {
+        const SUPABASE_URL = 'https://lmtjqneyfebhnzvgdwui.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdGpxbmV5ZmViaG56dmdkd3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNDkzNzEsImV4cCI6MjA4OTYyNTM3MX0._gemg7d30T3uFDXRJ2We9itBFncioGkQ93rQElqU2lM';
         sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
 
@@ -99,11 +98,7 @@
         if (window.testimonialsInitialized) return;
         window.testimonialsInitialized = true;
 
-        console.log('[Testimonials] Handler initializing (IIFE)...');
-
-        if (!sbClient && window.supabase) {
-            sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        }
+        // sbClient already handled by top level scope
 
         const testimonials = await fetchPublicTestimonials();
 

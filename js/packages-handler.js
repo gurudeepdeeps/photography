@@ -4,12 +4,11 @@
      * Fetches and displays packages from Supabase Database.
      */
 
-    const SUPABASE_URL = 'https://lmtjqneyfebhnzvgdwui.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdGpxbmV5ZmViaG56dmdkd3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNDkzNzEsImV4cCI6MjA4OTYyNTM3MX0._gemg7d30T3uFDXRJ2We9itBFncioGkQ93rQElqU2lM';
+    let sbClientPkg = window.supabaseClient;
 
-    let sbClientPkg = null;
-
-    if (window.supabase) {
+    if (!sbClientPkg && window.supabase) {
+        const SUPABASE_URL = 'https://lmtjqneyfebhnzvgdwui.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdGpxbmV5ZmViaG56dmdkd3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNDkzNzEsImV4cCI6MjA4OTYyNTM3MX0._gemg7d30T3uFDXRJ2We9itBFncioGkQ93rQElqU2lM';
         sbClientPkg = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
 
@@ -83,11 +82,7 @@
         if (window.packagesInitialized) return;
         window.packagesInitialized = true;
         
-        console.log('[Packages] Handler initializing (IIFE)...');
-        
-        if (!sbClientPkg && window.supabase) {
-            sbClientPkg = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        }
+        // sbClientPkg already handled by top level scope
         
         if (!sbClientPkg) {
             console.error('[Packages] Supabase client unavailable.');
