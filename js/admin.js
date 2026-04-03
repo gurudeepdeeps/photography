@@ -5,11 +5,8 @@
 // Initialize Supabase Client
 let sbClient = window.supabaseClient;
 
-if (!sbClient && window.supabase) {
-    console.warn('Supabase client not found in window. Initializing locally as fallback...');
-    const SUPABASE_URL = 'https://lmtjqneyfebhnzvgdwui.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdGpxbmV5ZmViaG56dmdkd3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNDkzNzEsImV4cCI6MjA4OTYyNTM3MX0._gemg7d30T3uFDXRJ2We9itBFncioGkQ93rQElqU2lM';
-    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+if (!sbClient) {
+    console.error('Supabase client not found. Please ensure supabase-config.js is loaded.');
 }
 
 /**

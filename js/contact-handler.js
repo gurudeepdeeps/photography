@@ -2,14 +2,7 @@
 // contact-handler.js - Handles contact form submission to Supabase
 
 document.addEventListener('DOMContentLoaded', () => {
-    const SB_URL = "https://lmtjqneyfebhnzvgdwui.supabase.co";
-    const SB_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdGpxbmV5ZmViaG56dmdkd3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwNDkzNzEsImV4cCI6MjA4OTYyNTM3MX0._gemg7d30T3uFDXRJ2We9itBFncioGkQ93rQElqU2lM';
-
     let sbClient = window.supabaseClient;
-
-    if (!sbClient && typeof supabase !== 'undefined') {
-        sbClient = supabase.createClient(SB_URL, SB_ANON_KEY);
-    }
 
     /**
      * Detailed backend logger
